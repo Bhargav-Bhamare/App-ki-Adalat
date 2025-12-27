@@ -1,0 +1,525 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>NyaayDrishti - App ki Adalat | Intelligent Judicial Platform</title>
+    <link rel="stylesheet" href="/CSS/style.css">
+    <meta property="og:image" content="https://bolt.new/static/og_default.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:image" content="https://bolt.new/static/og_default.png">
+</head>
+  <body>
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+      <div class="nav-container">
+        <div class="nav-logo">
+          <span class="logo-icon">⚖️</span>
+          <span class="logo-text">NyaayDrishti</span>
+        </div>
+        <ul class="nav-menu">
+          <li><a href="#home">Home</a></li>
+          <li><a href="#about">About Platform</a></li>
+          <li><a href="#how-it-works">How It Works</a></li>
+          <li><a href="#features">Features</a></li>
+          <li><a href="#impact">Impact</a></li>
+          <li><a href="#insights">Judicial Insights</a></li>
+          <li><a href="#access" class="nav-cta">Access Portal</a></li>
+        </ul>
+        <button class="mobile-menu-toggle" aria-label="Toggle menu">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+      </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+      <div class="hero-container">
+        <div class="hero-content">
+          <div class="hero-badge">Initiative for Government of India </div>
+          <h1 class="hero-title">NyaayDrishti</h1>
+          <p class="hero-tagline">App ki Adalat</p>
+          <p class="hero-mission">
+            An intelligent judicial workflow and case listing platform for efficient courts.
+            Modernizing the Indian judicial system through data-driven optimization.
+          </p>
+
+          <div class="access-buttons" id="access">
+            <button class="access-btn judge-btn">
+              <span class="btn-icon">👨‍⚖️</span>
+              <span class="btn-text">
+                <strong>Judge Access</strong>
+                <small>Judicial Officers Portal</small>
+              </span>
+            </button>
+            <button class="access-btn court-master-btn">
+              <span class="btn-icon">👨‍💼</span>
+              <span class="btn-text">
+                <strong>Court Master Access</strong>
+                <small>Administrative Portal</small>
+              </span>
+            </button>
+            <button class="access-btn advocate-btn">
+              <span class="btn-icon">⚖️</span>
+              <span class="btn-text">
+                <strong>Advocate Access</strong>
+                <small>Legal Practitioner Portal</small>
+              </span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Live Judicial Data Dashboard -->
+    <section class="dashboard section" id="insights">
+      <div class="section-container">
+        <h2 class="section-title">Live Judicial Dashboard</h2>
+        <p class="section-subtitle">Real-time insights into judicial workflow and performance</p>
+
+        <div class="stats-grid">
+          <div class="stat-card">
+            <div class="stat-icon">📋</div>
+            <div class="stat-value" data-target="45823">0</div>
+            <div class="stat-label">Total Pending Cases</div>
+            <div class="stat-trend negative">↓ 12.4% from last month</div>
+          </div>
+
+          <div class="stat-card">
+            <div class="stat-icon">📅</div>
+            <div class="stat-value" data-target="287">0</div>
+            <div class="stat-label">Cases Listed Today</div>
+            <div class="stat-trend positive">↑ 8.2% efficiency</div>
+          </div>
+
+          <div class="stat-card">
+            <div class="stat-icon">✅</div>
+            <div class="stat-value" data-target="1456">0</div>
+            <div class="stat-label">Cases Disposed This Month</div>
+            <div class="stat-trend positive">↑ 18.7% improvement</div>
+          </div>
+
+          <div class="stat-card">
+            <div class="stat-icon">⏱️</div>
+            <div class="stat-value" data-target="22">0</div>
+            <div class="stat-label">Avg. Hearing Time (min)</div>
+            <div class="stat-trend positive">↓ 15% time saved</div>
+          </div>
+
+          <div class="stat-card">
+            <div class="stat-icon">📊</div>
+            <div class="stat-value" data-target="34">0</div>
+            <div class="stat-label">Pendency Reduction (%)</div>
+            <div class="stat-trend positive">↑ Target: 40%</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Today's Cause List -->
+    <section class="cause-list">
+      <div class="section-container">
+        <h2 class="section-title">Today's Cause List</h2>
+        <p class="section-subtitle">Algorithm-driven intelligent case listing for maximum efficiency</p>
+
+        <div class="cause-list-container">
+          <div class="cause-list-header">
+            <span>Case Number</span>
+            <span>Case Type</span>
+            <span>Priority</span>
+            <span>Stage</span>
+            <span>Time Slot</span>
+          </div>
+
+          <div class="cause-list-row">
+            <span class="case-number">CRL/456/2024</span>
+            <span class="case-type">Criminal Appeal</span>
+            <span class="priority high">High</span>
+            <span class="stage">Arguments</span>
+            <span class="time-slot">10:00 - 10:45 AM</span>
+          </div>
+
+          <div class="cause-list-row">
+            <span class="case-number">CIV/892/2023</span>
+            <span class="case-type">Civil Suit</span>
+            <span class="priority medium">Medium</span>
+            <span class="stage">Evidence</span>
+            <span class="time-slot">10:45 - 11:30 AM</span>
+          </div>
+
+          <div class="cause-list-row">
+            <span class="case-number">WP/1234/2024</span>
+            <span class="case-type">Writ Petition</span>
+            <span class="priority high">High</span>
+            <span class="stage">Admission</span>
+            <span class="time-slot">11:30 - 12:00 PM</span>
+          </div>
+
+          <div class="cause-list-row">
+            <span class="case-number">FAM/567/2024</span>
+            <span class="case-type">Family Matter</span>
+            <span class="priority low">Low</span>
+            <span class="stage">Arguments</span>
+            <span class="time-slot">12:00 - 12:30 PM</span>
+          </div>
+
+          <div class="cause-list-row">
+            <span class="case-number">CRL/789/2024</span>
+            <span class="case-type">Bail Application</span>
+            <span class="priority high">High</span>
+            <span class="stage">Admission</span>
+            <span class="time-slot">02:00 - 02:30 PM</span>
+          </div>
+
+          <div class="cause-list-row">
+            <span class="case-number">CIV/345/2023</span>
+            <span class="case-type">Property Dispute</span>
+            <span class="priority medium">Medium</span>
+            <span class="stage">Evidence</span>
+            <span class="time-slot">02:30 - 03:15 PM</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- How It Works -->
+    <section class="how-it-works" id="how-it-works">
+      <div class="section-container">
+        <h2 class="section-title">How the System Works</h2>
+        <p class="section-subtitle">Streamlined judicial workflow from filing to disposal</p>
+
+        <div class="process-flow">
+          <div class="process-step">
+            <div class="step-number">01</div>
+            <div class="step-icon">📝</div>
+            <h3 class="step-title">Case Filing by Advocate</h3>
+            <p class="step-description">Advocates file cases digitally through the secure portal with all necessary documentation and pleadings.</p>
+          </div>
+
+          <div class="process-connector"></div>
+
+          <div class="process-step">
+            <div class="step-number">02</div>
+            <div class="step-icon">🔍</div>
+            <h3 class="step-title">Registry Scrutiny & Validation</h3>
+            <p class="step-description">Automated checks and manual review ensure compliance with procedural requirements and completeness.</p>
+          </div>
+
+          <div class="process-connector"></div>
+
+          <div class="process-step">
+            <div class="step-number">03</div>
+            <div class="step-icon">💾</div>
+            <h3 class="step-title">Case Registration & Storage</h3>
+            <p class="step-description">Approved cases are registered in the centralized database with unique identifiers and metadata.</p>
+          </div>
+
+          <div class="process-connector"></div>
+
+          <div class="process-step">
+            <div class="step-number">04</div>
+            <div class="step-icon">🤖</div>
+            <h3 class="step-title">Intelligent Listing Algorithm</h3>
+            <p class="step-description">AI-driven system optimally schedules cases based on priority, complexity, and resource availability.</p>
+          </div>
+
+          <div class="process-connector"></div>
+
+          <div class="process-step">
+            <div class="step-number">05</div>
+            <div class="step-icon">⚙️</div>
+            <h3 class="step-title">Court Master Execution</h3>
+            <p class="step-description">Court masters manage real-time courtroom flow and update case statuses during proceedings.</p>
+          </div>
+
+          <div class="process-connector"></div>
+
+          <div class="process-step">
+            <div class="step-number">06</div>
+            <div class="step-icon">⚖️</div>
+            <h3 class="step-title">Judge Hearing & Disposal</h3>
+            <p class="step-description">Judges access complete case information and conduct hearings with full digital support and documentation.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Role-Based Features -->
+    <section class="features" id="features">
+      <div class="section-container">
+        <h2 class="section-title">Role-Based Features</h2>
+        <p class="section-subtitle">Tailored functionality for every stakeholder in the judicial system</p>
+
+        <div class="features-grid">
+          <!-- Judge Features -->
+          <div class="feature-card judge-card">
+            <div class="feature-header">
+              <div class="feature-icon">👨‍⚖️</div>
+              <h3 class="feature-title">Judge Portal</h3>
+            </div>
+            <ul class="feature-list">
+              <li>
+                <span class="feature-bullet">✓</span>
+                <span>Intelligent cause list with priority-based scheduling</span>
+              </li>
+              <li>
+                <span class="feature-bullet">✓</span>
+                <span>Full case overview with pleadings, evidence, and witness details</span>
+              </li>
+              <li>
+                <span class="feature-bullet">✓</span>
+                <span>Pendency insights and performance analytics</span>
+              </li>
+              <li>
+                <span class="feature-bullet">✓</span>
+                <span>Digital order sheet and judgment preparation</span>
+              </li>
+              <li>
+                <span class="feature-bullet">✓</span>
+                <span>Historical case data and precedent reference</span>
+              </li>
+              <li>
+                <span class="feature-bullet">✓</span>
+                <span>Real-time courtroom status updates</span>
+              </li>
+            </ul>
+          </div>
+
+          <!-- Court Master Features -->
+          <div class="feature-card court-master-card">
+            <div class="feature-header">
+              <div class="feature-icon">👨‍💼</div>
+              <h3 class="feature-title">Court Master Portal</h3>
+            </div>
+            <ul class="feature-list">
+              <li>
+                <span class="feature-bullet">✓</span>
+                <span>Real-time case status control and updates</span>
+              </li>
+              <li>
+                <span class="feature-bullet">✓</span>
+                <span>Time slot execution and courtroom flow management</span>
+              </li>
+              <li>
+                <span class="feature-bullet">✓</span>
+                <span>Digital registers and attendance tracking</span>
+              </li>
+              <li>
+                <span class="feature-bullet">✓</span>
+                <span>Adjournment management with reason tracking</span>
+              </li>
+              <li>
+                <span class="feature-bullet">✓</span>
+                <span>Next date allocation and conflict resolution</span>
+              </li>
+              <li>
+                <span class="feature-bullet">✓</span>
+                <span>Live dashboard for daily proceedings</span>
+              </li>
+            </ul>
+          </div>
+
+          <!-- Advocate Features -->
+          <div class="feature-card advocate-card">
+            <div class="feature-header">
+              <div class="feature-icon">⚖️</div>
+              <h3 class="feature-title">Advocate Portal</h3>
+            </div>
+            <ul class="feature-list">
+              <li>
+                <span class="feature-bullet">✓</span>
+                <span>Case readiness confirmation system</span>
+              </li>
+              <li>
+                <span class="feature-bullet">✓</span>
+                <span>Expected hearing time visibility and notifications</span>
+              </li>
+              <li>
+                <span class="feature-bullet">✓</span>
+                <span>Digital filings and document management</span>
+              </li>
+              <li>
+                <span class="feature-bullet">✓</span>
+                <span>Client communication and progress tracking</span>
+              </li>
+              <li>
+                <span class="feature-bullet">✓</span>
+                <span>Cause list monitoring and alerts</span>
+              </li>
+              <li>
+                <span class="feature-bullet">✓</span>
+                <span>Adjournment request submission</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Impact & Performance -->
+    <section class="impact" id="impact">
+      <div class="section-container">
+        <h2 class="section-title">Impact & Performance</h2>
+        <p class="section-subtitle">Measurable improvements in judicial efficiency and transparency</p>
+
+        <div class="impact-grid">
+          <div class="impact-card">
+            <div class="impact-visual">
+              <div class="progress-ring">
+                <svg width="120" height="120">
+                  <circle cx="60" cy="60" r="54" class="progress-ring-circle-bg"></circle>
+                  <circle cx="60" cy="60" r="54" class="progress-ring-circle" data-progress="42"></circle>
+                </svg>
+                <div class="progress-text">42%</div>
+              </div>
+            </div>
+            <h3 class="impact-title">Reduced Adjournments</h3>
+            <p class="impact-description">Significant decrease in case adjournments through better preparation and readiness tracking.</p>
+          </div>
+
+          <div class="impact-card">
+            <div class="impact-visual">
+              <div class="progress-ring">
+                <svg width="120" height="120">
+                  <circle cx="60" cy="60" r="54" class="progress-ring-circle-bg"></circle>
+                  <circle cx="60" cy="60" r="54" class="progress-ring-circle" data-progress="67"></circle>
+                </svg>
+                <div class="progress-text">67%</div>
+              </div>
+            </div>
+            <h3 class="impact-title">Better Court Time Utilization</h3>
+            <p class="impact-description">Optimized scheduling ensures maximum productivity of court hours with minimal idle time.</p>
+          </div>
+
+          <div class="impact-card">
+            <div class="impact-visual">
+              <div class="progress-ring">
+                <svg width="120" height="120">
+                  <circle cx="60" cy="60" r="54" class="progress-ring-circle-bg"></circle>
+                  <circle cx="60" cy="60" r="54" class="progress-ring-circle" data-progress="55"></circle>
+                </svg>
+                <div class="progress-text">55%</div>
+              </div>
+            </div>
+            <h3 class="impact-title">Faster Disposal Cycles</h3>
+            <p class="impact-description">Streamlined workflow accelerates case progression from filing to final disposal.</p>
+          </div>
+
+          <div class="impact-card">
+            <div class="impact-visual">
+              <div class="progress-ring">
+                <svg width="120" height="120">
+                  <circle cx="60" cy="60" r="54" class="progress-ring-circle-bg"></circle>
+                  <circle cx="60" cy="60" r="54" class="progress-ring-circle" data-progress="89"></circle>
+                </svg>
+                <div class="progress-text">89%</div>
+              </div>
+            </div>
+            <h3 class="impact-title">Transparent Listing Process</h3>
+            <p class="impact-description">Algorithm-driven listing eliminates bias and ensures fair, transparent case scheduling.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Notices & Transparency -->
+    <section class="notices" id="about">
+      <div class="section-container">
+        <h2 class="section-title">Notices & Platform Updates</h2>
+        <p class="section-subtitle">Stay informed about system announcements and court notices</p>
+
+        <div class="notices-grid">
+          <div class="notice-card">
+            <div class="notice-badge system">System Update</div>
+            <h3 class="notice-title">New AI-Powered Case Prioritization Released</h3>
+            <p class="notice-description">Enhanced algorithm now considers case age, complexity, and urgency for optimal scheduling.</p>
+            <div class="notice-date">24 December 2025</div>
+          </div>
+
+          <div class="notice-card">
+            <div class="notice-badge court">Court Notice</div>
+            <h3 class="notice-title">Holiday Court Schedule Announced</h3>
+            <p class="notice-description">Special sittings scheduled for urgent matters during the upcoming court recess period.</p>
+            <div class="notice-date">20 December 2025</div>
+          </div>
+
+          <div class="notice-card">
+            <div class="notice-badge platform">Platform News</div>
+            <h3 class="notice-title">Mobile App Launch for Advocates</h3>
+            <p class="notice-description">Access case updates, cause lists, and filing capabilities on-the-go with the new mobile application.</p>
+            <div class="notice-date">15 December 2025</div>
+          </div>
+
+          <div class="notice-card">
+            <div class="notice-badge system">System Maintenance</div>
+            <h3 class="notice-title">Scheduled Maintenance Window</h3>
+            <p class="notice-description">Platform will undergo maintenance on 28 December 2025 from 11:00 PM to 1:00 AM for performance upgrades.</p>
+            <div class="notice-date">18 December 2025</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <div class="footer-container">
+        <div class="footer-grid">
+          <div class="footer-section">
+            <h3 class="footer-heading">
+              <span class="footer-logo-icon">⚖️</span>
+              NyaayDrishti
+            </h3>
+            <p class="footer-description">
+              An intelligent judicial workflow and case listing platform modernizing the Indian judicial system through data-driven optimization and transparency.
+            </p>
+            <p class="footer-tagline">App ki Adalat</p>
+          </div>
+
+          <div class="footer-section">
+            <h4 class="footer-subheading">About</h4>
+            <ul class="footer-links">
+              <li><a href="#about">About NyaayDrishti</a></li>
+              <li><a href="#how-it-works">Platform Overview</a></li>
+              <li><a href="#features">Key Features</a></li>
+              <li><a href="#impact">Impact Stories</a></li>
+            </ul>
+          </div>
+
+          <div class="footer-section">
+            <h4 class="footer-subheading">Legal</h4>
+            <ul class="footer-links">
+              <li><a href="#disclaimer">Disclaimer</a></li>
+              <li><a href="#privacy">Data & Privacy Policy</a></li>
+              <li><a href="#terms">Terms of Service</a></li>
+              <li><a href="#accessibility">Accessibility Statement</a></li>
+            </ul>
+          </div>
+
+          <div class="footer-section">
+            <h4 class="footer-subheading">Contact</h4>
+            <ul class="footer-links">
+              <li>Email: info@nyaaydrishti.gov.in</li>
+              <li>Helpdesk: 1800-XXX-XXXX</li>
+              <li>Technical Support: support@nyaaydrishti.gov.in</li>
+              <li>Address: New Delhi, India</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="footer-bottom">
+          <p class="footer-copyright">
+            © 2025 NyaayDrishti. All rights reserved. | Government of India Initiative
+          </p>
+          <p class="footer-disclaimer">
+            This platform is designed for authorized judicial personnel, court administrators, and registered advocates only.
+          </p>
+        </div>
+      </div>
+    </footer>
+
+    <script type="module" src="/JS/main.js"></script>
+  </body>
+</html>
