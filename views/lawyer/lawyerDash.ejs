@@ -3,14 +3,749 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/CSS/Lawyer/style.css">
     <title>NyaayDrishti- Advocate Portal</title>
 </head>
-<header>
-    <div class="navbar">
-        
-    </div>
-</header>
 <body>
     
+    <!-- Sidebar -->
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <div class="sidebar-logo">NyaayDrishti</div>
+            <div class="sidebar-subtitle">Advocate Portal</div>
+        </div>
+        <ul class="sidebar-menu">
+            <li><a href="#" class="active" onclick="showSection('dashboard')"><span class="icon">🏠</span> Dashboard</a></li>
+            <li><a href="#" onclick="showSection('my-cases')"><span class="icon">📁</span> My Cases</a></li>
+            <li><a href="#" onclick="showSection('today-matters')"><span class="icon">📅</span> Today's Matters</a></li>
+            <li><a href="#" onclick="showSection('file-case')"><span class="icon">➕</span> File New Case</a></li>
+            <li><a href="#" onclick="showSection('defects')"><span class="icon">⚠️</span> Defect Management</a></li>
+            <li><a href="#" onclick="showSection('notifications')"><span class="icon">🔔</span> Notifications</a></li>
+            <li><a href="#" onclick="showSection('calendar')"><span class="icon">📆</span> Calendar</a></li>
+            <li><a href="#" onclick="showSection('analytics')"><span class="icon">📊</span> Analytics</a></li>
+            <li><a href="#" onclick="showSection('profile')"><span class="icon">👤</span> Profile</a></li>
+        </ul>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Top Bar -->
+        <div class="top-bar">
+            <div class="welcome-text">
+                <h1>Welcome, Adv. Rajesh Kumar</h1>
+                <p>Sunday, December 28, 2025</p>
+            </div>
+            <div class="user-profile">
+                <div class="notification-badge" onclick="showSection('notifications')">
+                    🔔
+                    <span class="badge-count">5</span>
+                </div>
+                <div class="user-avatar">RK</div>
+            </div>
+        </div>
+
+        <!-- Dashboard Section -->
+        <div id="dashboard" class="content-section">
+            <!-- Summary Cards -->
+            <div class="summary-cards">
+                <div class="summary-card">
+                    <div class="card-header">
+                        <div class="card-title">Today's Hearings</div>
+                        <div class="card-icon">📋</div>
+                    </div>
+                    <div class="card-value">4</div>
+                    <div class="card-subtitle">Across 2 courts</div>
+                </div>
+
+                <div class="summary-card">
+                    <div class="card-header">
+                        <div class="card-title">Upcoming This Week</div>
+                        <div class="card-icon">📅</div>
+                    </div>
+                    <div class="card-value">12</div>
+                    <div class="card-subtitle">3 need preparation</div>
+                </div>
+
+                <div class="summary-card">
+                    <div class="card-header">
+                        <div class="card-title">Awaiting Orders</div>
+                        <div class="card-icon">⏳</div>
+                    </div>
+                    <div class="card-value">8</div>
+                    <div class="card-subtitle">Reserved for judgment</div>
+                </div>
+
+                <div class="summary-card">
+                    <div class="card-header">
+                        <div class="card-title">Pending Filings</div>
+                        <div class="card-icon">📝</div>
+                    </div>
+                    <div class="card-value">2</div>
+                    <div class="card-subtitle">Under scrutiny</div>
+                </div>
+
+                <div class="summary-card">
+                    <div class="card-header">
+                        <div class="card-title">Adjournments</div>
+                        <div class="card-icon">🔄</div>
+                    </div>
+                    <div class="card-value">3</div>
+                    <div class="card-subtitle">This month</div>
+                </div>
+            </div>
+
+            <!-- Quick Access -->
+            <div class="section">
+                <div class="section-header">
+                    <h2 class="section-title">Quick Actions</h2>
+                </div>
+                <div class="case-actions">
+                    <button class="btn btn-primary" onclick="showSection('file-case')">📄 File New Case</button>
+                    <button class="btn btn-primary" onclick="showSection('today-matters')">📅 View Today's Matters</button>
+                    <button class="btn btn-outline" onclick="showSection('defects')">⚠️ Check Defects</button>
+                    <button class="btn btn-outline" onclick="showSection('calendar')">📆 Open Calendar</button>
+                </div>
+            </div>
+
+            <!-- Recent Cases Preview -->
+            <div class="section">
+                <div class="section-header">
+                    <h2 class="section-title">Recent Cases</h2>
+                    <button class="btn btn-outline" onclick="showSection('my-cases')">View All →</button>
+                </div>
+                <div class="case-list">
+                    <div class="case-card" onclick="openCaseDetail('CRL/2024/00123')">
+                        <div class="case-header">
+                            <div>
+                                <div class="case-number">CRL/2024/00123</div>
+                                <div class="case-court">District Court, Pune</div>
+                            </div>
+                            <span class="priority-indicator priority-high"></span>
+                        </div>
+                        <div class="case-details">
+                            <div class="case-detail-item">
+                                <div class="detail-label">Stage</div>
+                                <div class="detail-value">Arguments</div>
+                            </div>
+                            <div class="case-detail-item">
+                                <div class="detail-label">Next Hearing</div>
+                                <div class="detail-value">Dec 28, 2025</div>
+                            </div>
+                            <div class="case-detail-item">
+                                <div class="detail-label">Time Slot</div>
+                                <div class="detail-value">10:30 AM</div>
+                            </div>
+                            <div class="case-detail-item">
+                                <div class="detail-label">Status</div>
+                                <span class="status-badge status-listed">Listed</span>
+                            </div>
+                        </div>
+                        <div class="case-actions">
+                            <button class="btn btn-primary" onclick="event.stopPropagation(); markReadiness('CRL/2024/00123')">Mark Ready</button>
+                            <button class="btn btn-outline" onclick="event.stopPropagation(); uploadDocument('CRL/2024/00123')">Upload Doc</button>
+                        </div>
+                    </div>
+
+                    <div class="case-card">
+                        <div class="case-header">
+                            <div>
+                                <div class="case-number">CIV/2024/00456</div>
+                                <div class="case-court">High Court, Mumbai</div>
+                            </div>
+                            <span class="priority-indicator priority-medium"></span>
+                        </div>
+                        <div class="case-details">
+                            <div class="case-detail-item">
+                                <div class="detail-label">Stage</div>
+                                <div class="detail-value">Evidence</div>
+                            </div>
+                            <div class="case-detail-item">
+                                <div class="detail-label">Next Hearing</div>
+                                <div class="detail-value">Jan 3, 2026</div>
+                            </div>
+                            <div class="case-detail-item">
+                                <div class="detail-label">Time Slot</div>
+                                <div class="detail-value">2:00 PM</div>
+                            </div>
+                            <div class="case-detail-item">
+                                <div class="detail-label">Status</div>
+                                <span class="status-badge status-reserved">Reserved</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- My Cases Section -->
+        <div id="my-cases" class="content-section hidden">
+            <div class="section">
+                <div class="section-header">
+                    <h2 class="section-title">My Cases</h2>
+                </div>
+
+                <!-- Filters -->
+                <div class="filters-bar">
+                    <div class="search-box">
+                        <span class="search-icon">🔍</span>
+                        <input type="text" placeholder="Search by case number, party name..." id="caseSearch">
+                    </div>
+                    <select class="filter-dropdown" id="courtFilter">
+                        <option value="">All Courts</option>
+                        <option value="district">District Court</option>
+                        <option value="high">High Court</option>
+                        <option value="supreme">Supreme Court</option>
+                    </select>
+                    <select class="filter-dropdown" id="stageFilter">
+                        <option value="">All Stages</option>
+                        <option value="admission">Admission</option>
+                        <option value="evidence">Evidence</option>
+                        <option value="arguments">Arguments</option>
+                    </select>
+                    <select class="filter-dropdown" id="priorityFilter">
+                        <option value="">All Priorities</option>
+                        <option value="high">High</option>
+                        <option value="medium">Medium</option>
+                        <option value="low">Low</option>
+                    </select>
+                </div>
+
+                <!-- Cases List -->
+                <div class="case-list" id="allCasesList">
+                    <!-- Cases will be dynamically loaded -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Today's Matters Section -->
+        <div id="today-matters" class="content-section hidden">
+            <div class="section">
+                <div class="section-header">
+                    <h2 class="section-title">Today's Matters - December 28, 2025</h2>
+                </div>
+
+                <div class="todays-matters">
+                    <div class="matter-item">
+                        <div class="time-slot">
+                            <div class="time-display">10:30 AM</div>
+                            <div class="time-buffer">45 min</div>
+                        </div>
+                        <div class="matter-details">
+                            <div class="case-number">CRL/2024/00123</div>
+                            <div class="case-court">District Court - Courtroom 3</div>
+                        </div>
+                        <div class="live-status status-waiting">Waiting</div>
+                    </div>
+
+                    <div class="matter-item">
+                        <div class="time-slot">
+                            <div class="time-display">11:30 AM</div>
+                            <div class="time-buffer">30 min</div>
+                        </div>
+                        <div class="matter-details">
+                            <div class="case-number">CIV/2024/00789</div>
+                            <div class="case-court">High Court - Court Hall 2</div>
+                        </div>
+                        <div class="live-status status-called">Called</div>
+                    </div>
+
+                    <div class="matter-item">
+                        <div class="time-slot">
+                            <div class="time-display">02:00 PM</div>
+                            <div class="time-buffer">60 min</div>
+                        </div>
+                        <div class="matter-details">
+                            <div class="case-number">WP/2024/01012</div>
+                            <div class="case-court">High Court - Court Hall 1</div>
+                        </div>
+                        <div class="live-status status-waiting">Waiting</div>
+                    </div>
+
+                    <div class="matter-item">
+                        <div class="time-slot">
+                            <div class="time-display">03:30 PM</div>
+                            <div class="time-buffer">30 min</div>
+                        </div>
+                        <div class="matter-details">
+                            <div class="case-number">FAM/2024/00445</div>
+                            <div class="case-court">Family Court - Courtroom 1</div>
+                        </div>
+                        <div class="live-status status-waiting">Waiting</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- File New Case Section -->
+        <div id="file-case" class="content-section hidden">
+            <div class="section">
+                <div class="section-header">
+                    <h2 class="section-title">File New Case</h2>
+                </div>
+
+                <form class="filing-form">
+                    <div class="form-group">
+                        <label>Step 1: Case Type Selection</label>
+                        <select required>
+                            <option value="">Select Case Type</option>
+                            <option value="civil">Civil Suit</option>
+                            <option value="criminal">Criminal Case</option>
+                            <option value="family">Family Matter</option>
+                            <option value="writ">Writ Petition</option>
+                            <option value="appeal">Appeal</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Step 2: Court & Jurisdiction</label>
+                        <select required>
+                            <option value="">Select Court</option>
+                            <option value="district">District Court</option>
+                            <option value="high">High Court</option>
+                            <option value="supreme">Supreme Court</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Step 3: Petitioner Details</label>
+                        <input type="text" placeholder="Petitioner Name" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Respondent Details</label>
+                        <input type="text" placeholder="Respondent Name" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Step 4: Upload Petition</label>
+                        <input type="file" accept=".pdf" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Upload Affidavit</label>
+                        <input type="file" accept=".pdf" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Step 5: Attach Vakalatnama</label>
+                        <input type="file" accept=".pdf" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Step 6: Court Fee Details</label>
+                        <input type="number" placeholder="Fee Amount" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Case Summary</label>
+                        <textarea placeholder="Brief description of the case" required></textarea>
+                    </div>
+
+                    <div class="case-actions">
+                        <button type="button" class="btn btn-outline">Save as Draft</button>
+                        <button type="submit" class="btn btn-primary">Submit for Filing</button>
+                    </div>
+                </form>
+
+                <div class="section" style="margin-top: 2rem; background-color: var(--light-blue);">
+                    <h3 style="color: var(--primary-navy); margin-bottom: 1rem;">After Submission</h3>
+                    <p><strong>Diary Number:</strong> Will be generated automatically</p>
+                    <p><strong>Filing Status Track:</strong></p>
+                    <ul style="margin-left: 2rem; margin-top: 0.5rem;">
+                        <li>Under Scrutiny - Registry is reviewing documents</li>
+                        <li>Under Objection - Defects identified, needs correction</li>
+                        <li>Registered - Case successfully registered</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Defect Management Section -->
+        <div id="defects" class="content-section hidden">
+            <div class="section">
+                <div class="section-header">
+                    <h2 class="section-title">Defect Management</h2>
+                </div>
+
+                <div class="defect-item">
+                    <div class="defect-header">
+                        <div class="defect-case">CIV/2024/01890</div>
+                        <div class="defect-deadline">Deadline: Jan 5, 2026</div>
+                    </div>
+                    <div class="defect-reason">
+                        <strong>Defect Reason:</strong> Vakalatnama not properly stamped. Please submit corrected document with proper court fee stamp.
+                    </div>
+                    <div class="case-actions">
+                        <button class="btn btn-primary">Upload Corrected Document</button>
+                        <button class="btn btn-outline">View Original Filing</button>
+                    </div>
+                </div>
+
+                <div class="defect-item">
+                    <div class="defect-header">
+                        <div class="defect-case">CRL/2024/02134</div>
+                        <div class="defect-deadline">Deadline: Jan 8, 2026</div>
+                    </div>
+                    <div class="defect-reason">
+                        <strong>Defect Reason:</strong> Affidavit missing notary seal. Respondent address incomplete.
+                    </div>
+                    <div class="case-actions">
+                        <button class="btn btn-primary">Upload Corrected Document</button>
+                        <button class="btn btn-outline">View Original Filing</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Notifications Section -->
+        <div id="notifications" class="content-section hidden">
+            <div class="section">
+                <div class="section-header">
+                    <h2 class="section-title">Notifications</h2>
+                    <div class="filters-bar">
+                        <select class="filter-dropdown">
+                            <option value="all">All Notifications</option>
+                            <option value="urgent">Urgent Only</option>
+                            <option value="today">Today</option>
+                            <option value="week">This Week</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="case-list">
+                    <div class="case-card" style="border-left: 4px solid var(--red);">
+                        <div class="case-header">
+                            <div>
+                                <div class="case-number">🔴 Urgent</div>
+                                <div class="case-court">Case CRL/2024/00123 - Listed Tomorrow</div>
+                            </div>
+                            <small style="color: var(--steel-grey);">2 hours ago</small>
+                        </div>
+                        <p style="color: var(--steel-grey); margin-top: 0.5rem;">Your case is listed for hearing tomorrow at 10:15 AM in Courtroom 3, District Court.</p>
+                    </div>
+
+                    <div class="case-card" style="border-left: 4px solid var(--yellow);">
+                        <div class="case-header">
+                            <div>
+                                <div class="case-number">⚠️ Defect Raised</div>
+                                <div class="case-court">Case CIV/2024/01890</div>
+                            </div>
+                            <small style="color: var(--steel-grey);">5 hours ago</small>
+                        </div>
+                        <p style="color: var(--steel-grey); margin-top: 0.5rem;">Registry has identified defects. Please rectify within 7 days.</p>
+                    </div>
+
+                    <div class="case-card" style="border-left: 4px solid var(--green);">
+                        <div class="case-header">
+                            <div>
+                                <div class="case-number">✅ Order Reserved</div>
+                                <div class="case-court">Case WP/2024/01012</div>
+                            </div>
+                            <small style="color: var(--steel-grey);">1 day ago</small>
+                        </div>
+                        <p style="color: var(--steel-grey); margin-top: 0.5rem;">Judge has reserved the order after final arguments. Expected within 30 days.</p>
+                    </div>
+
+                    <div class="case-card" style="border-left: 4px solid var(--secondary-blue);">
+                        <div class="case-header">
+                            <div>
+                                <div class="case-number">📝 Case Adjourned</div>
+                                <div class="case-court">Case FAM/2024/00445</div>
+                            </div>
+                            <small style="color: var(--steel-grey);">2 days ago</small>
+                        </div>
+                        <p style="color: var(--steel-grey); margin-top: 0.5rem;">Case adjourned to Jan 10, 2026 due to respondent's absence.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Calendar Section -->
+        <div id="calendar" class="content-section hidden">
+            <div class="section">
+                <div class="section-header">
+                    <h2 class="section-title">Hearing Calendar</h2>
+                </div>
+
+                <div class="calendar-container">
+                    <div class="calendar-header">
+                        <div class="calendar-month">December 2025</div>
+                        <div class="calendar-nav">
+                            <button onclick="previousMonth()">← Prev</button>
+                            <button onclick="nextMonth()">Next →</button>
+                        </div>
+                    </div>
+
+                    <div class="calendar-grid">
+                        <div class="calendar-day-header">Sun</div>
+                        <div class="calendar-day-header">Mon</div>
+                        <div class="calendar-day-header">Tue</div>
+                        <div class="calendar-day-header">Wed</div>
+                        <div class="calendar-day-header">Thu</div>
+                        <div class="calendar-day-header">Fri</div>
+                        <div class="calendar-day-header">Sat</div>
+
+                        <div class="calendar-day"><div class="day-number">1</div></div>
+                        <div class="calendar-day has-hearing"><div class="day-number">2</div><span class="day-indicator"></span></div>
+                        <div class="calendar-day"><div class="day-number">3</div></div>
+                        <div class="calendar-day"><div class="day-number">4</div></div>
+                        <div class="calendar-day has-hearing"><div class="day-number">5</div><span class="day-indicator"></span></div>
+                        <div class="calendar-day"><div class="day-number">6</div></div>
+                        <div class="calendar-day"><div class="day-number">7</div></div>
+                        <div class="calendar-day"><div class="day-number">8</div></div>
+                        <div class="calendar-day has-hearing"><div class="day-number">9</div><span class="day-indicator"></span></div>
+                        <div class="calendar-day"><div class="day-number">10</div></div>
+                        <div class="calendar-day"><div class="day-number">11</div></div>
+                        <div class="calendar-day has-hearing"><div class="day-number">12</div><span class="day-indicator"></span></div>
+                        <div class="calendar-day"><div class="day-number">13</div></div>
+                        <div class="calendar-day"><div class="day-number">14</div></div>
+                        <div class="calendar-day"><div class="day-number">15</div></div>
+                        <div class="calendar-day has-hearing"><div class="day-number">16</div><span class="day-indicator"></span></div>
+                        <div class="calendar-day"><div class="day-number">17</div></div>
+                        <div class="calendar-day"><div class="day-number">18</div></div>
+                        <div class="calendar-day has-hearing"><div class="day-number">19</div><span class="day-indicator"></span></div>
+                        <div class="calendar-day"><div class="day-number">20</div></div>
+                        <div class="calendar-day"><div class="day-number">21</div></div>
+                        <div class="calendar-day"><div class="day-number">22</div></div>
+                        <div class="calendar-day has-hearing"><div class="day-number">23</div><span class="day-indicator"></span></div>
+                        <div class="calendar-day"><div class="day-number">24</div></div>
+                        <div class="calendar-day"><div class="day-number">25</div></div>
+                        <div class="calendar-day"><div class="day-number">26</div></div>
+                        <div class="calendar-day"><div class="day-number">27</div></div>
+                        <div class="calendar-day today has-hearing"><div class="day-number">28</div><span class="day-indicator"></span></div>
+                        <div class="calendar-day"><div class="day-number">29</div></div>
+                        <div class="calendar-day has-hearing"><div class="day-number">30</div><span class="day-indicator"></span></div>
+                        <div class="calendar-day"><div class="day-number">31</div></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Analytics Section -->
+        <div id="analytics" class="content-section hidden">
+            <div class="section">
+                <div class="section-header">
+                    <h2 class="section-title">Personal Analytics</h2>
+                </div>
+
+                <div class="analytics-grid">
+                    <div class="analytics-card">
+                        <div class="analytics-value">15%</div>
+                        <div class="analytics-label">Adjournment Rate</div>
+                        <div class="analytics-chart">
+                            <div class="chart-bar" style="height: 40%;"></div>
+                            <div class="chart-bar" style="height: 30%;"></div>
+                            <div class="chart-bar" style="height: 20%;"></div>
+                            <div class="chart-bar" style="height: 15%;"></div>
+                        </div>
+                    </div>
+
+                    <div class="analytics-card">
+                        <div class="analytics-value">68%</div>
+                        <div class="analytics-label">Case Disposal Rate</div>
+                        <div class="analytics-chart">
+                            <div class="chart-bar" style="height: 50%;"></div>
+                            <div class="chart-bar" style="height: 60%;"></div>
+                            <div class="chart-bar" style="height: 55%;"></div>
+                            <div class="chart-bar" style="height: 68%;"></div>
+                        </div>
+                    </div>
+
+                    <div class="analytics-card">
+                        <div class="analytics-value">42 min</div>
+                        <div class="analytics-label">Avg Hearing Duration</div>
+                        <div class="analytics-chart">
+                            <div class="chart-bar" style="height: 45%;"></div>
+                            <div class="chart-bar" style="height: 40%;"></div>
+                            <div class="chart-bar" style="height: 50%;"></div>
+                            <div class="chart-bar" style="height: 42%;"></div>
+                        </div>
+                    </div>
+
+                    <div class="analytics-card">
+                        <div class="analytics-value">89%</div>
+                        <div class="analytics-label">Document Upload Rate</div>
+                        <div class="analytics-chart">
+                            <div class="chart-bar" style="height: 80%;"></div>
+                            <div class="chart-bar" style="height: 85%;"></div>
+                            <div class="chart-bar" style="height: 88%;"></div>
+                            <div class="chart-bar" style="height: 89%;"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="section" style="margin-top: 2rem;">
+                    <h3 style="color: var(--primary-navy); margin-bottom: 1rem;">Court-wise Performance</h3>
+                    <div class="case-list">
+                        <div class="case-card">
+                            <div class="case-header">
+                                <div class="case-number">District Court, Pune</div>
+                            </div>
+                            <div class="case-details">
+                                <div class="case-detail-item">
+                                    <div class="detail-label">Total Cases</div>
+                                    <div class="detail-value">28</div>
+                                </div>
+                                <div class="case-detail-item">
+                                    <div class="detail-label">Disposed</div>
+                                    <div class="detail-value">19</div>
+                                </div>
+                                <div class="case-detail-item">
+                                    <div class="detail-label">Success Rate</div>
+                                    <div class="detail-value">72%</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="case-card">
+                            <div class="case-header">
+                                <div class="case-number">High Court, Mumbai</div>
+                            </div>
+                            <div class="case-details">
+                                <div class="case-detail-item">
+                                    <div class="detail-label">Total Cases</div>
+                                    <div class="detail-value">15</div>
+                                </div>
+                                <div class="case-detail-item">
+                                    <div class="detail-label">Disposed</div>
+                                    <div class="detail-value">9</div>
+                                </div>
+                                <div class="case-detail-item">
+                                    <div class="detail-label">Success Rate</div>
+                                    <div class="detail-value">65%</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Profile Section -->
+        <div id="profile" class="content-section hidden">
+            <div class="section">
+                <div class="section-header">
+                    <h2 class="section-title">Profile & Credentials</h2>
+                </div>
+
+                <div class="form-group">
+                    <label>Advocate Name</label>
+                    <input type="text" value="Rajesh Kumar" readonly>
+                </div>
+
+                <div class="form-group">
+                    <label>Enrollment Number</label>
+                    <input type="text" value="BAR/MH/2015/12345" readonly>
+                </div>
+
+                <div class="form-group">
+                    <label>Courts of Practice</label>
+                    <input type="text" value="District Court Pune, High Court Mumbai" readonly>
+                </div>
+
+                <div class="form-group">
+                    <label>Email</label>
+                    <input type="email" value="rajesh.kumar@legalfirm.com">
+                </div>
+
+                <div class="form-group">
+                    <label>Mobile Number</label>
+                    <input type="tel" value="+91 98765 43210">
+                </div>
+
+                <div class="form-group">
+                    <label>Vakalatnama Validity</label>
+                    <input type="text" value="Valid till Dec 31, 2026" readonly>
+                </div>
+
+                <div class="section" style="margin-top: 2rem; background-color: var(--off-white);">
+                    <h3 style="color: var(--primary-navy); margin-bottom: 1rem;">Document Storage</h3>
+                    <div class="case-actions">
+                        <button class="btn btn-primary">📄 View All Documents</button>
+                        <button class="btn btn-outline">⬆️ Upload New Document</button>
+                    </div>
+                    <p style="margin-top: 1rem; color: var(--steel-grey);">Total Storage Used: 156 MB / 1 GB</p>
+                </div>
+
+                <div class="case-actions" style="margin-top: 2rem;">
+                    <button class="btn btn-primary">Update Profile</button>
+                    <button class="btn btn-outline">Change Password</button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Case Detail Modal -->
+    <div id="caseDetailModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title">Case Details - CRL/2024/00123</h2>
+                <span class="close-btn" onclick="closeModal('caseDetailModal')">×</span>
+            </div>
+
+            <div class="section" style="box-shadow: none; padding: 1rem 0;">
+                <h3 style="color: var(--primary-navy); margin-bottom: 1rem;">Case Summary</h3>
+                <div class="case-details">
+                    <div class="case-detail-item">
+                        <div class="detail-label">Case Type</div>
+                        <div class="detail-value">Criminal Appeal</div>
+                    </div>
+                    <div class="case-detail-item">
+                        <div class="detail-label">Current Stage</div>
+                        <div class="detail-value">Arguments</div>
+                    </div>
+                    <div class="case-detail-item">
+                        <div class="detail-label">Judge</div>
+                        <div class="detail-value">Hon'ble Justice A.K. Sharma</div>
+                    </div>
+                    <div class="case-detail-item">
+                        <div class="detail-label">Filed On</div>
+                        <div class="detail-value">March 15, 2024</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section" style="box-shadow: none; padding: 1rem 0;">
+                <h3 style="color: var(--primary-navy); margin-bottom: 1rem;">Parties & Advocates</h3>
+                <p><strong>Petitioner:</strong> Ramesh Singh</p>
+                <p><strong>Respondent:</strong> State of Maharashtra</p>
+                <p><strong>Your Side:</strong> Petitioner</p>
+            </div>
+
+            <div class="section" style="box-shadow: none; padding: 1rem 0;">
+                <h3 style="color: var(--primary-navy); margin-bottom: 1rem;">Hearing History</h3>
+                <div class="case-list">
+                    <div class="case-card">
+                        <strong>Dec 10, 2025</strong> - Arguments heard, matter reserved for orders
+                    </div>
+                    <div class="case-card">
+                        <strong>Nov 22, 2025</strong> - Evidence recording completed
+                    </div>
+                    <div class="case-card">
+                        <strong>Oct 15, 2025</strong> - Admission hearing, case admitted
+                    </div>
+                </div>
+            </div>
+
+            <div class="section" style="box-shadow: none; padding: 1rem 0;">
+                <h3 style="color: var(--primary-navy); margin-bottom: 1rem;">Evidence & Witness Tracker</h3>
+                <p><strong>Filed Evidence:</strong> 12 documents</p>
+                <p><strong>Witnesses Examined:</strong> 3/5</p>
+                <p><strong>Pending Cross-examination:</strong> 2</p>
+            </div>
+
+            <div class="section" style="box-shadow: none; padding: 1rem 0;">
+                <h3 style="color: var(--primary-navy); margin-bottom: 1rem;">Personal Notes (Private)</h3>
+                <textarea placeholder="Add your strategy notes, prep checklist, or reminders here..." style="width: 100%; min-height: 100px; padding: 0.7rem; border: 1px solid var(--border-color); border-radius: 5px;"></textarea>
+                <p style="color: var(--steel-grey); font-size: 0.85rem; margin-top: 0.5rem;">⚠️ These notes are private and not visible to the court</p>
+            </div>
+
+            <div class="case-actions">
+                <button class="btn btn-primary">Save Notes</button>
+                <button class="btn btn-outline">Download Case Summary</button>
+            </div>
+        </div>
+    </div>
+    <script src="/JS/Lawyer/script.js"></script>
 </body>
 </html>
