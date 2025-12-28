@@ -16,6 +16,10 @@ app.get("/",(req,res)=> {
     res.render("landing.ejs");
 });
 
+app.get("/lawyerDashboard",(req,res) =>{
+    res.render("lawyer/lawyerDash.ejs");
+});
+
 
 app.listen(8080,()=>{
     console.log("Listening to port Successfully!");
