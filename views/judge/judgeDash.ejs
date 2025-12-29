@@ -7,6 +7,40 @@
     <link rel="stylesheet" href="/CSS/Judge/style.css" type="text/css">
   <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
   <script src="https://cdn.tailwindcss.com" type="text/javascript"></script>
+ <!-- Embedded styles for Case Quick View (self-contained, gov-style) -->
+ <style>
+  :root{--bg:#fbfbf9;--panel:#ffffff;--muted:#6b7280;--accent:#0f172a}
+  body{background:var(--bg);color:var(--accent);font-family:Inter, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial}
+  /* Daily cause list table */
+  .daily-cause-section{margin-top:18px;background:var(--panel);border:1px solid #e6e9ef;padding:14px;border-radius:6px}
+  .daily-cause-section h3{margin:0 0 8px 0;font-size:15px;color:var(--accent);font-weight:600}
+  table.cause-table{width:100%;border-collapse:collapse;font-size:14px}
+  table.cause-table thead th{background:#f3f4f6;padding:8px 10px;text-align:left;color:#111827;border-bottom:1px solid #e5e7eb;font-weight:600}
+  table.cause-table tbody td{padding:10px;border-bottom:1px solid #f1f5f9}
+  tr.cause-row{cursor:pointer}
+  tr.cause-row:hover{background:#f8fafc}
+  .case-meta{color:var(--muted);font-size:13px}
+
+  /* Right-side sliding panel */
+  .overlay{position:fixed;inset:0;background:rgba(15,23,42,0.45);opacity:0;visibility:hidden;transition:opacity .22s ease,visibility .22s}
+  .overlay.open{opacity:1;visibility:visible}
+  .case-panel{position:fixed;right:0;top:0;height:100vh;width:420px;max-width:96%;background:var(--panel);box-shadow:-8px 0 24px rgba(2,6,23,.12);transform:translateX(100%);transition:transform .28s ease;padding:20px;overflow:auto}
+  .case-panel.open{transform:translateX(0)}
+  .panel-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}
+  .panel-title{font-size:17px;font-weight:700;color:var(--accent)}
+  .close-btn{background:#f3f4f6;border:0;padding:6px 8px;border-radius:6px;cursor:pointer}
+  .badge{display:inline-flex;align-items:center;gap:6px;padding:6px 8px;border-radius:999px;font-weight:700;font-size:13px}
+  .badge.urgent{background:#fff1f2;color:#dc2626;border:1px solid #fee2e2}
+  .badge.regular{background:#fffbeb;color:#b45309;border:1px solid #fef3c7}
+  .badge.low{background:#f0fdf4;color:#065f46;border:1px solid #dcfce7}
+  .field-label{font-size:12px;color:var(--muted);margin-top:10px}
+  .field-value{font-size:15px;color:#0f172a;margin-top:4px}
+  .summary-box{background:#f8fafc;padding:10px;border-radius:6px;border:1px solid #eef2ff;color:#111827}
+  .action-row{display:flex;gap:8px;margin-top:14px;flex-wrap:wrap}
+  .action-btn{background:#eef2ff;border:1px solid #dbeafe;color:#1e3a8a;padding:8px 10px;border-radius:6px;cursor:pointer;font-weight:600}
+  .muted-note{font-size:13px;color:var(--muted);margin-top:8px}
+  @media (max-width:640px){.case-panel{width:100%;max-width:100%}}
+ </style>
  </head>
  <body>
   <div class="dashboard-container">
@@ -30,20 +64,22 @@
    </header><!-- Main Content -->
    <div class="main-content"><!-- Left Panel -->
     <div class="left-panel"><!-- Current Case Section -->
-     <section class="current-case-section"><span class="section-badge">CURRENT CASE (In Progress)</span>
-      <h2 class="case-title">Case #27834 - Criminal Bail Application</h2>
-      <div class="case-detail">
-       <strong>Petitioner:</strong> Ram Kumar (32, unemployed)
-      </div>
-      <div class="case-detail">
-       <strong>Respondent:</strong> State of Delhi
-      </div>
-      <div class="case-detail">
-       <strong>Advocate:</strong> Adv. Thakur (Petitioner) | APP Singh (State)
-      </div>
-      <div class="status-indicator">
-       🔴 <span>IN PROGRESS</span>
-      </div><!-- Time Tracking -->
+    <section class="current-case-section"><span class="section-badge">CURRENT CASE (In Progress)</span>
+     <h2 id="current_caseTitle" class="case-title">Case #27834 - Criminal Bail Application</h2>
+     <div id="current_petitioner" class="case-detail">
+      <strong>Petitioner:</strong> Ram Kumar (32, unemployed)
+     </div>
+     <div id="current_respondent" class="case-detail">
+      <strong>Respondent:</strong> State of Delhi
+     </div>
+     <div id="current_advocates" class="case-detail">
+      <strong>Advocate:</strong> Adv. Thakur (Petitioner) | APP Singh (State)
+     </div>
+     <div id="current_status" class="status-indicator">
+      🔴 <span>IN PROGRESS</span>
+     </div><!-- Time Tracking -->
+        <!-- IDs added so JS can synchronise current case display -->
+      
       <div class="time-tracking-box">
        <div class="time-row"><strong>Scheduled:</strong> 10:00 AM - 10:30 AM (30 minutes allocated)
        </div>
@@ -66,69 +102,72 @@
         Was 11:50 AM, <strong>NOW <span id="case4Time">12:35 PM</span></strong> - <span class="notified-badge">NOTIFIED ✓</span>
       </div>
      </section>
-    </div><!-- Right Panel -->
-    <div class="right-panel"><!-- Control Section -->
-     <section class="control-card">
-      <h2 class="control-header">JUDGE CONTROL - EXTEND SESSION?</h2>
-      <div class="radio-group" id="timeOptions"><label class="radio-option selected" data-minutes="10">
-        <div class="radio-circle">
-         <div class="radio-circle-inner"></div>
-        </div><span>10 minutes remaining</span> </label> <label class="radio-option" data-minutes="20">
-        <div class="radio-circle">
-         <div class="radio-circle-inner"></div>
-        </div><span>20 minutes remaining</span> </label> <label class="radio-option" data-minutes="30">
-        <div class="radio-circle">
-         <div class="radio-circle-inner"></div>
-        </div><span>30 minutes remaining</span> </label> <label class="radio-option" data-minutes="45">
-        <div class="radio-circle">
-         <div class="radio-circle-inner"></div>
-        </div><span>45 minutes remaining</span> </label> <label class="radio-option" data-minutes="60">
-        <div class="radio-circle">
-         <div class="radio-circle-inner"></div>
-        </div><span>1 hour remaining</span> </label> <label class="radio-option" data-minutes="90">
-        <div class="radio-circle">
-         <div class="radio-circle-inner"></div>
-        </div><span>More than 1 hour</span> </label>
-      </div><!-- Ripple Preview -->
-      <div class="ripple-preview-box">
-       <div class="ripple-header">
-        📱 RIPPLE EFFECT PREVIEW
-       </div>
-       <div class="ripple-content" id="ripplePreview">
-        If you select <strong>'10 minutes'</strong>:<br>
-         • Case 3 shifts to <strong>11:50 AM</strong> (+10 min)<br>
-         • Case 4 shifts to <strong>12:45 PM</strong> (+10 min)<br>
-         • All advocates notified via WhatsApp
-       </div>
-      </div><!-- Action Buttons -->
-      <div class="action-buttons"><button class="action-btn btn-confirm" onclick="confirmExtension()"> CONFIRM EXTENSION - NOTIFY ALL </button> <button class="action-btn btn-cancel" onclick="cancelCase()"> CANCEL - CASE ENDS NOW </button>
-      </div>
-     </section><!-- System Alerts -->
-     <section class="alerts-section">
-      <h3 class="alerts-header">⚠️ SYSTEM ALERTS</h3>
-      <div class="alert-item">
-       <div class="alert-title">
-        🔴 WARNING: Court closes at 5:00 PM
-       </div>
-       <div class="alert-content">
-        Current timeline: Case #4 will NOT get heard today
-       </div>
-       <div class="alert-recommendation">
-        Recommendation: Mark Case #4 as SPILLOVER
-       </div>
-      </div>
-      <div class="alert-item info">
-       <div class="alert-title">
-        🟢 INFO: 2 buffer slots still available
-       </div>
-       <div class="alert-content">
-        30 minutes total buffer time remaining
-       </div>
-       <div class="alert-content" style="color: #16A34A; font-weight: 600;">
-        Can pull urgent cases forward if needed
-       </div>
-      </div>
-     </section>
+    </section>
+
+    </div><!-- Left Panel end -->
+
+    <!-- Case Quick View overlay + sliding panel (right) -->
+    <div class="right-panel">
+      <!-- Daily Cause List moved to right panel for easier access -->
+      <section class="daily-cause-section">
+        <h3>Daily Cause List</h3>
+        <table class="cause-table" aria-describedby="dailyCauseDesc">
+          <thead>
+            <tr>
+              <th>Case No</th>
+              <th>Title</th>
+              <th>Category</th>
+              <th>Stage</th>
+              <th>Time</th>
+            </tr>
+          </thead>
+          <tbody id="causeTableBody">
+            <!-- Rows rendered by JavaScript -->
+          </tbody>
+        </table>
+        <div id="dailyCauseDesc" style="display:none">Click any row to open a read-only Case Quick View panel.</div>
+      </section>
+
+      <div id="caseOverlay" class="overlay" onclick="handleOverlayClick(event)"></div>
+      <aside id="caseQuickView" class="case-panel" aria-hidden="true" role="dialog" aria-label="Case Quick View">
+        <div class="panel-header">
+          <div class="panel-title">Case Quick View</div>
+          <div><button class="close-btn" onclick="closeCaseQuickView()" aria-label="Close">✕</button></div>
+        </div>
+        <div id="caseContent">
+          <div class="field-label">Case Number</div>
+          <div id="cv_caseNumber" class="field-value">—</div>
+
+          <div class="field-label">Case Title</div>
+          <div id="cv_caseTitle" class="field-value">—</div>
+
+          <div class="field-label">Category & Priority</div>
+          <div id="cv_priorityWrap" class="field-value"><span id="cv_category" class="case-meta">—</span> <span id="cv_priorityBadge" class="badge regular">Regular</span></div>
+
+          <div class="field-label">Current Stage</div>
+          <div id="cv_stage" class="field-value">—</div>
+
+          <div class="field-label">Petitioner / Respondent</div>
+          <div id="cv_parties" class="field-value case-meta">—</div>
+
+          <div class="field-label">Advocates on record</div>
+          <div id="cv_advocates" class="field-value case-meta">—</div>
+
+          <div class="field-label">Short Case Summary</div>
+          <div id="cv_summary" class="summary-box">—</div>
+
+          <div class="field-label">Last Order</div>
+          <div id="cv_lastOrder" class="field-value case-meta">—</div>
+
+          <div class="action-row">
+            <button class="action-btn" onclick="onAction('fullFile')">View Full Case File</button>
+            <button class="action-btn" onclick="onAction('evidence')">View Evidence List</button>
+            <button class="action-btn" onclick="onAction('witness')">View Witness List</button>
+            <button class="action-btn" onclick="onAction('timeline')">View Case Timeline</button>
+          </div>
+          <div class="muted-note">Read-only quick reference. Use full case file for decisions.</div>
+        </div>
+      </aside>
     </div>
    </div><!-- Bottom Status Bar -->
    <footer class="status-bar">
@@ -168,5 +207,117 @@
   </div>
   <script src="/_sdk/element_sdk.js"></script>
   <script src="/JS/Judge/script.js"></script>
+  <script>
+    // Placeholder case data for demo / hackathon
+    const CASES = [
+      { id: 'C1001', caseNumber: '27834', title: 'Ram Kumar vs State of Delhi', category: 'Criminal', priority: 'urgent', stage: 'Admission', petitioner: 'Ram Kumar', respondent: 'State of Delhi', advocates: ['Adv. Thakur (Petitioner)', 'APP Singh (State)'], summary: 'Bail application arising from alleged theft. Complainant alleges involvement of accused in multiple incidents; defence raises jurisdiction and procedural objections. Notice issued; hearing for admission and arguments.', lastOrder: 'Issue notice to police; list for admission.', time: '10:00 AM' },
+      { id: 'C1002', caseNumber: '27835', title: 'Sita Devi vs Ramesh Kumar', category: 'Civil', priority: 'regular', stage: 'Evidence', petitioner: 'Sita Devi', respondent: 'Ramesh Kumar', advocates: ['Adv. Mehra (Petitioner)', 'Adv. Gupta (Respondent)'], summary: 'Civil suit relating to property dispute and partition. Parties have filed evidence; limited witnesses remain to be examined.', lastOrder: 'Evidence to continue; witness 3 to be examined.', time: '10:45 AM' },
+      { id: 'C1003', caseNumber: '27856', title: 'State vs Mohan Lal', category: 'Criminal', priority: 'low', stage: 'Arguments', petitioner: 'State', respondent: 'Mohan Lal', advocates: ['APP Singh (State)', 'Adv. Kumar (Accused)'], summary: 'The matter involves non-violent theft allegations. Arguments on sentence mitigation scheduled.', lastOrder: 'Argument time fixed; 10 minutes each.', time: '11:50 AM' }
+    ];
+
+    // Render daily cause list into table
+    function renderCauseTable() {
+      const tbody = document.getElementById('causeTableBody');
+      tbody.innerHTML = '';
+      CASES.forEach(c => {
+        const tr = document.createElement('tr');
+        tr.className = 'cause-row';
+        tr.setAttribute('data-case-id', c.id);
+        tr.tabIndex = 0;
+        tr.innerHTML = `
+          <td><strong>${escapeHtml(c.caseNumber)}</strong></td>
+          <td>${escapeHtml(c.title)}<div class="case-meta">${escapeHtml(c.petitioner)} v/s ${escapeHtml(c.respondent)}</div></td>
+          <td>${escapeHtml(c.category)}</td>
+          <td>${escapeHtml(c.stage)}</td>
+          <td class="case-meta">${escapeHtml(c.time)}</td>
+        `;
+        tr.addEventListener('click', () => openCaseQuickView(c.id));
+        tr.addEventListener('keypress', (e) => { if (e.key === 'Enter') openCaseQuickView(c.id); });
+        tbody.appendChild(tr);
+      });
+    }
+
+    function escapeHtml(text) {
+      if (!text && text !== 0) return '';
+      return String(text).replace(/[&<>"']/g, function (s) { return ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[s]); });
+    }
+
+    // Open the Case Quick View by id
+    // showOverlay: boolean — if true, dim background and allow outside-click to close (modal style)
+    function openCaseQuickView(caseId, showOverlay = false) {
+      const c = CASES.find(x => x.id === caseId);
+      if (!c) return console.warn('Case not found', caseId);
+      // Populate fields
+      document.getElementById('cv_caseNumber').textContent = c.caseNumber;
+      document.getElementById('cv_caseTitle').textContent = c.title;
+      document.getElementById('cv_category').textContent = c.category;
+      const badge = document.getElementById('cv_priorityBadge');
+      badge.textContent = (c.priority === 'urgent') ? '🔴 Urgent' : (c.priority === 'regular' ? '🟡 Regular' : '🟢 Low');
+      badge.className = 'badge ' + (c.priority === 'urgent' ? 'urgent' : (c.priority === 'regular' ? 'regular' : 'low'));
+      document.getElementById('cv_stage').textContent = c.stage;
+      document.getElementById('cv_parties').textContent = c.petitioner + ' — ' + c.respondent;
+      document.getElementById('cv_advocates').textContent = (c.advocates || []).join(' | ');
+      document.getElementById('cv_summary').textContent = c.summary || generateSummary(c);
+      document.getElementById('cv_lastOrder').textContent = c.lastOrder || 'No recent order.';
+
+      // Sync left 'current case' display
+      syncCurrentCaseDisplay(c);
+
+      // Show panel (sliding). Overlay only if explicitly requested.
+      const overlay = document.getElementById('caseOverlay');
+      if (showOverlay) overlay.classList.add('open'); else overlay.classList.remove('open');
+      const panel = document.getElementById('caseQuickView');
+      panel.classList.add('open');
+      panel.setAttribute('aria-hidden', 'false');
+    }
+
+    // Keep left panel current-case section synced with selected case
+    function syncCurrentCaseDisplay(c) {
+      const titleEl = document.getElementById('current_caseTitle');
+      const petEl = document.getElementById('current_petitioner');
+      const respEl = document.getElementById('current_respondent');
+      const advEl = document.getElementById('current_advocates');
+      const statusEl = document.getElementById('current_status');
+      if (titleEl) titleEl.textContent = `Case #${c.caseNumber} - ${c.title}`;
+      if (petEl) petEl.innerHTML = `<strong>Petitioner:</strong> ${escapeHtml(c.petitioner)}`;
+      if (respEl) respEl.innerHTML = `<strong>Respondent:</strong> ${escapeHtml(c.respondent)}`;
+      if (advEl) advEl.innerHTML = `<strong>Advocate:</strong> ${escapeHtml((c.advocates||[]).join(' | '))}`;
+      if (statusEl) statusEl.innerHTML = `${c.priority === 'urgent' ? '🔴' : c.priority === 'regular' ? '🟡' : '🟢'} <span>${escapeHtml(c.stage)}</span>`;
+    }
+
+    // Close the quick view
+    function closeCaseQuickView() {
+      document.getElementById('caseOverlay').classList.remove('open');
+      const panel = document.getElementById('caseQuickView');
+      panel.classList.remove('open');
+      panel.setAttribute('aria-hidden', 'true');
+    }
+
+    // Close when clicking outside (overlay) — only if overlay itself was clicked
+    function handleOverlayClick(e) {
+      if (e.target && e.target.id === 'caseOverlay') closeCaseQuickView();
+    }
+
+    // Placeholder action handlers (read-only navigation)
+    function onAction(action) {
+      console.log('Placeholder action:', action);
+      // For demo, flash the button or show a temporary message
+      // In production this would navigate to full views
+    }
+
+    // Simple summary generator if not provided
+    function generateSummary(c) {
+      return `${c.title} — ${c.petitioner} v/s ${c.respondent}. Category: ${c.category}. Current stage: ${c.stage}.`;
+    }
+
+    // Close on Escape
+    document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeCaseQuickView(); });
+
+    // Initial render — render table and open quick view with the current (first) case
+    document.addEventListener('DOMContentLoaded', () => {
+      renderCauseTable();
+      if (CASES.length) openCaseQuickView(CASES[0].id, false);
+    });
+  </script>
 </body>
 </html>
