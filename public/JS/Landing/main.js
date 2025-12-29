@@ -70,15 +70,15 @@ function animateCounter(element) {
 
 /* ------------------------------------------------------- */
 
-function initAccessButtons() {
-  document.querySelectorAll('.access-btn').forEach(button => {
-    button.addEventListener('click', () => {
-      alert(
-        'Portal access is under development.\nPlease contact the system administrator.'
-      );
-    });
-  });
-}
+// function initAccessButtons() {
+//   document.querySelectorAll('.access-btn').forEach(button => {
+//     button.addEventListener('click', () => {
+//       alert(
+//         'Portal access is under development.\nPlease contact the system administrator.'
+//       );
+//     });
+//   });
+// }
 
 window.addEventListener('scroll', () => {
   const navbar = document.querySelector('.navbar');
