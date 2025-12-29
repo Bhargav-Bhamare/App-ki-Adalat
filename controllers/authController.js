@@ -11,7 +11,11 @@ exports.getSignup = (req, res) => {
 };
 
 exports.signup = async (req, res) => {
-  const { name, email, password, role } = req.body;
+  const { username, email, password, role, mobile, BarCouncilRegistrationNumber } = req.body;
+
+  if (!username || !email || !password) {
+    return res.render("auth/signup", { error: "Name, email, and password are required" });
+  }
 
   const existingUser = users.find(u => u.email === email);
   if (existingUser) {
@@ -22,10 +26,12 @@ exports.signup = async (req, res) => {
 
   users.push({
     id: Date.now(),
-    name,
+    name: username,
     email,
     password: hashedPassword,
-    role
+    role: role || "LAWYER",
+    mobile,
+    BarCouncilRegistrationNumber
   });
 
   res.redirect("/login");
