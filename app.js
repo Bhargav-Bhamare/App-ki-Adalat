@@ -12,6 +12,18 @@ app.use(methodOverride("_method"));
 // app.engine("ejs",ejsMate);
 app.use(express.static(path.join(__dirname,"/public")));
 
+
+//Establishing Connection
+main()
+.then(() => console.log("DataBase Connection Successful!"))
+.catch(err => console.log(err));
+
+
+async function main() {
+  await mongoose.connect("mongodb://localhost:27017/NyaayDrishti");
+};
+
+
 app.get("/",(req,res)=> {
     res.render("landing.ejs");
 });
