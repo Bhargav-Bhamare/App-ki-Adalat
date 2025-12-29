@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>NyaayDrishti | Login</title>
+
+  <!-- KEEP SAME STYLES (unchanged) -->
+  <%- include('./authstyles.ejs') %>
+</head>
+<body>
+  <div class="auth-container">
+    <div class="header">
+      <h1>NyaayDrishti</h1>
+      <p>Judicial Workflow Management System</p>
+    </div>
+
+    <!-- ROLE SELECTOR (UI ONLY) -->
+    <div class="role-selector">
+      <button class="role-tab active" data-role="lawyer" onclick="switchRole('lawyer')">Lawyer</button>
+      <button class="role-tab" data-role="court-master" onclick="switchRole('court-master')">Court Master</button>
+      <button class="role-tab" data-role="judge" onclick="switchRole('judge')">Judge</button>
+    </div>
+
+    <div class="form-container">
+      <div id="security-badge" class="hidden"></div>
+
+      <!-- IMPORTANT: backend expects `email` -->
+      <form method="POST" action="/login">
+        <div class="form-group">
+          <label id="login-identifier-label">Email</label>
+          <input
+            type="email"
+            name="email"
+            id="login-identifier"
+            required
+          />
+          <span class="helper-text" id="login-helper"></span>
+        </div>
+
+        <div class="form-group">
+          <label>Password</label>
+          <input type="password" name="password" required />
+        </div>
+
+        <button type="submit" class="submit-btn" id="login-btn">
+          Login as Advocate
+        </button>
+
+        <div class="secondary-link" id="signup-link">
+          New Advocate? <a href="/signup">Create Account</a>
+        </div>
+
+        <div class="disclaimer hidden" id="judge-disclaimer">
+          This system facilitates case management and does not assist in judicial decision-making.
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    let currentRole = 'lawyer';
+
+    function switchRole(role) {
+      currentRole = role;
+
+      document.querySelectorAll('.role-tab').forEach(tab =>
+        tab.classList.remove('active')
+      );
+      document
+        .querySelector(`[data-role="${role}"]`)
+        .classList.add('active');
+
+      updateLoginForm(role);
+    }
+
+    function updateLoginForm(role) {
+      const label = document.getElementById('login-identifier-label');
+      const helper = document.getElementById('login-helper');
+      const btn = document.getElementById('login-btn');
+      const signup = document.getElementById('signup-link');
+      const badge = document.getElementById('security-badge');
+      const disclaimer = document.getElementById('judge-disclaimer');
+
+      badge.classList.add('hidden');
+      disclaimer.classList.add('hidden');
+      signup.classList.remove('hidden');
+
+      if (role === 'lawyer') {
+        label.textContent = 'Email';
+        helper.textContent = 'Use your registered email address';
+        btn.textContent = 'Login as Advocate';
+      }
+
+      if (role === 'court-master') {
+        signup.classList.add('hidden');
+        badge.classList.remove('hidden');
+        badge.className = 'security-badge restricted';
+        badge.innerHTML = '🔒 Restricted Access — Registry Personnel Only';
+        btn.textContent = 'Login to Registry Dashboard';
+      }
+
+      if (role === 'judge') {
+        signup.classList.add('hidden');
+        badge.classList.remove('hidden');
+        badge.className = 'security-badge restricted';
+        badge.innerHTML = '⚖️ Judicial Access — Confidential System';
+        disclaimer.classList.remove('hidden');
+        btn.textContent = 'Access Court Dashboard';
+      }
+    }
+
+    updateLoginForm('lawyer');
+  </script>
+</body>
+</html>
