@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NyaayDrishti- Judge Portal</title>
+    <link rel="stylesheet" href="/CSS/Judge/style.css" type="text/css">
+  <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
+  <script src="https://cdn.tailwindcss.com" type="text/javascript"></script>
+ </head>
+ <body>
+  <div class="dashboard-container">
+   <header class="dashboard-header">
+    <div class="header-left">
+     <div class="logo-icon">
+      ⚖️
+     </div>
+     <div class="header-info">
+      <div class="app-title">
+       NyaayDrishti
+      </div>
+      <div class="judge-info">
+       Justice Sharma | Court #3 |
+      </div>
+     </div>
+    </div>
+    <div class="current-time-display" id="currentTime">
+     11:25 AM
+    </div>
+   </header><!-- Main Content -->
+   <div class="main-content"><!-- Left Panel -->
+    <div class="left-panel"><!-- Current Case Section -->
+     <section class="current-case-section"><span class="section-badge">CURRENT CASE (In Progress)</span>
+      <h2 class="case-title">Case #27834 - Criminal Bail Application</h2>
+      <div class="case-detail">
+       <strong>Petitioner:</strong> Ram Kumar (32, unemployed)
+      </div>
+      <div class="case-detail">
+       <strong>Respondent:</strong> State of Delhi
+      </div>
+      <div class="case-detail">
+       <strong>Advocate:</strong> Adv. Thakur (Petitioner) | APP Singh (State)
+      </div>
+      <div class="status-indicator">
+       🔴 <span>IN PROGRESS</span>
+      </div><!-- Time Tracking -->
+      <div class="time-tracking-box">
+       <div class="time-row"><strong>Scheduled:</strong> 10:00 AM - 10:30 AM (30 minutes allocated)
+       </div>
+       <div class="time-row"><strong>Actual:</strong> 10:00 AM - <span id="currentActualTime">11:25 AM</span> (<span id="elapsedMinutes">85</span> minutes elapsed)
+       </div>
+       <div class="overrun-text">
+        ⚠️ OVERRUN: <span id="overrunMinutes">+55</span> MINUTES
+       </div>
+       <div class="progress-bar-container">
+        <div class="progress-bar" id="progressBar"></div><span class="progress-label" id="progressLabel">283%</span>
+       </div>
+      </div>
+     </section><!-- Next Cases Section -->
+     <section class="next-cases-section">
+      <h3 class="next-case-header">NEXT CASES - QUICK VIEW</h3>
+      <div class="next-case-item"><strong>Case 3 (Next):</strong> Case #27835 (Civil Suit - Property Dispute)<br>
+        Was 10:45 AM, <strong>NOW <span id="case3Time">11:40 AM</span></strong> - <span class="notified-badge">NOTIFIED ✓</span>
+      </div>
+      <div class="next-case-item"><strong>Case 4:</strong> Case #27856 (Criminal - Theft)<br>
+        Was 11:50 AM, <strong>NOW <span id="case4Time">12:35 PM</span></strong> - <span class="notified-badge">NOTIFIED ✓</span>
+      </div>
+     </section>
+    </div><!-- Right Panel -->
+    <div class="right-panel"><!-- Control Section -->
+     <section class="control-card">
+      <h2 class="control-header">JUDGE CONTROL - EXTEND SESSION?</h2>
+      <div class="radio-group" id="timeOptions"><label class="radio-option selected" data-minutes="10">
+        <div class="radio-circle">
+         <div class="radio-circle-inner"></div>
+        </div><span>10 minutes remaining</span> </label> <label class="radio-option" data-minutes="20">
+        <div class="radio-circle">
+         <div class="radio-circle-inner"></div>
+        </div><span>20 minutes remaining</span> </label> <label class="radio-option" data-minutes="30">
+        <div class="radio-circle">
+         <div class="radio-circle-inner"></div>
+        </div><span>30 minutes remaining</span> </label> <label class="radio-option" data-minutes="45">
+        <div class="radio-circle">
+         <div class="radio-circle-inner"></div>
+        </div><span>45 minutes remaining</span> </label> <label class="radio-option" data-minutes="60">
+        <div class="radio-circle">
+         <div class="radio-circle-inner"></div>
+        </div><span>1 hour remaining</span> </label> <label class="radio-option" data-minutes="90">
+        <div class="radio-circle">
+         <div class="radio-circle-inner"></div>
+        </div><span>More than 1 hour</span> </label>
+      </div><!-- Ripple Preview -->
+      <div class="ripple-preview-box">
+       <div class="ripple-header">
+        📱 RIPPLE EFFECT PREVIEW
+       </div>
+       <div class="ripple-content" id="ripplePreview">
+        If you select <strong>'10 minutes'</strong>:<br>
+         • Case 3 shifts to <strong>11:50 AM</strong> (+10 min)<br>
+         • Case 4 shifts to <strong>12:45 PM</strong> (+10 min)<br>
+         • All advocates notified via WhatsApp
+       </div>
+      </div><!-- Action Buttons -->
+      <div class="action-buttons"><button class="action-btn btn-confirm" onclick="confirmExtension()"> CONFIRM EXTENSION - NOTIFY ALL </button> <button class="action-btn btn-cancel" onclick="cancelCase()"> CANCEL - CASE ENDS NOW </button>
+      </div>
+     </section><!-- System Alerts -->
+     <section class="alerts-section">
+      <h3 class="alerts-header">⚠️ SYSTEM ALERTS</h3>
+      <div class="alert-item">
+       <div class="alert-title">
+        🔴 WARNING: Court closes at 5:00 PM
+       </div>
+       <div class="alert-content">
+        Current timeline: Case #4 will NOT get heard today
+       </div>
+       <div class="alert-recommendation">
+        Recommendation: Mark Case #4 as SPILLOVER
+       </div>
+      </div>
+      <div class="alert-item info">
+       <div class="alert-title">
+        🟢 INFO: 2 buffer slots still available
+       </div>
+       <div class="alert-content">
+        30 minutes total buffer time remaining
+       </div>
+       <div class="alert-content" style="color: #16A34A; font-weight: 600;">
+        Can pull urgent cases forward if needed
+       </div>
+      </div>
+     </section>
+    </div>
+   </div><!-- Bottom Status Bar -->
+   <footer class="status-bar">
+    <div class="stat-item">
+     <div class="stat-value">
+      21 ✓
+     </div>
+     <div class="stat-label">
+      Cases Disposed Today
+     </div>
+    </div>
+    <div class="stat-item">
+     <div class="stat-value">
+      5
+     </div>
+     <div class="stat-label">
+      Cases Adjourned Today
+     </div>
+    </div>
+    <div class="stat-item">
+     <div class="stat-value">
+      45 min
+     </div>
+     <div class="stat-label">
+      Average Time per Case
+     </div>
+    </div>
+    <div class="stat-item">
+     <div class="stat-value" style="color: #10B981;">
+      91% ✓
+     </div>
+     <div class="stat-label">
+      Disposal Rate
+     </div>
+    </div>
+   </footer>
+  </div>
+  <script src="/_sdk/element_sdk.js"></script>
+  <script src="/JS/Judge/script.js"></script>
+</body>
+</html>
