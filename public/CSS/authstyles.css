@@ -1,4 +1,3 @@
-    <style>
         * {
             margin: 0;
             padding: 0;
@@ -14,7 +13,7 @@
             align-items: center;
             justify-content: center;
 
-            background-image: url("/CSS/auth/supreme-court.jpeg");
+            background-image: url("../supreme-court.jpeg");
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
@@ -30,7 +29,7 @@
             pointer-events: none;
             background: radial-gradient(
                 circle at center,
-                rgba(255, 255, 255, 0.35),
+                #ffffff59,
                 rgba(255, 255, 255, 0.65)
         );
             backdrop-filter: blur(1.5px);
@@ -332,4 +331,3 @@
                 padding: 20px;
             }
         }
-    </style>
