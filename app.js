@@ -18,6 +18,7 @@ const dashboardRoutes = require("./routes/dashboardRoutes");
 const lawyerRouter = require("./routes/lawyer.js");
 const dbUrl = process.env.ATLASDB_URL || process.env.MONGO_URI || 'mongodb://localhost:27017/NyaayDrishti';
 const session = require("express-session");
+const MongoStore = require("connect-mongo").default;
 
 //IMP Middlewares - MUST come before routes
 app.engine("ejs",ejsMate);
@@ -45,21 +46,21 @@ async function main() {
   }
 };
 
-// // MongoStore Options
-// const store = MongoStore.create({
-//     mongoUrl: dbUrl,
-//     secret: process.env.SECRET,
+// MongoStore Options
+const store = MongoStore.create({
+    mongoUrl: dbUrl,
+    secret: process.env.SECRET,
     
-//     touchAfter: 24 * 3600,
-// });
-// store.on("error", (err)=>{
-//     console.log("Error in MONGO SESSION STORE!",err);
-// });
+    touchAfter: 24 * 3600,
+});
+store.on("error", (err)=>{
+    console.log("Error in MONGO SESSION STORE!",err);
+});
 
 //Session Configuration
 app.use(
   session({
-    // store,
+    store,
     secret: process.env.SECRET || 'hackathon-secret-key',
     resave: false,
     saveUninitialized: false,
