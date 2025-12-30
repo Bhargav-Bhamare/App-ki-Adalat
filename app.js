@@ -49,7 +49,7 @@ app.use(flash());
 //All related to Passport
 app.use(passport.initialize());
 app.use(passport.session());
-passport.use(new LocalStrategy(Lawyer.authenticate()));
+passport.use(new LocalStrategy({ usernameField: 'email' }, Lawyer.authenticate()));
 passport.serializeUser(Lawyer.serializeUser());
 passport.deserializeUser(Lawyer.deserializeUser());
 
@@ -75,7 +75,6 @@ app.get("/lawyerDashboard",(req,res) =>{
 app.get("/judgeDashboard",(req,res) =>{
     res.render("judge/judgeDash.ejs");
 });
-
 
 app.listen(8080,()=>{
     console.log("Listening to port Successfully!");
