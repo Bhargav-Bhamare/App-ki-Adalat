@@ -54,7 +54,19 @@ function displayDailyCauseList(causeListData) {
 
   let html = '<div class="daily-cause-list">';
   list.forEach((caseItem = {}, index) => {
-    const score = caseItem.priority && typeof caseItem.priority.score === 'number' ? caseItem.priority.score : 0;
+    // Debug: log and safely extract priority score
+    console.log(`Judge table - Case ${index}:`, { caseNumber: caseItem.caseNumber, priority: caseItem.priority });
+    
+    let score = 0;
+    if (caseItem.priority) {
+      if (typeof caseItem.priority.score === 'number') {
+        score = caseItem.priority.score;
+      } else if (typeof caseItem.priority === 'number') {
+        score = caseItem.priority;
+      }
+    }
+    console.log(`Judge table - Case ${index} final score: ${score}`);
+    
     const priorityPercentage = (score * 100).toFixed(1);
     const est = caseItem.estimatedTime || 0;
     const timePercentage = ((est / 300) * 100).toFixed(1);

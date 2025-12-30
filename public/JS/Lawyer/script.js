@@ -438,7 +438,7 @@ function loadRecentCases(cases) {
                 event.target.reset();
             } catch (error) {
                 console.error('Error filing case:', error);
-                alert('Error filing case. Please try again.');
+                
             }
         }
         

@@ -65,7 +65,28 @@ function renderCauseList(list) {
     tr.dataset.estimatedTime = s.estimatedTime;
     tr.dataset.startOffset = s.startOffset !== null ? s.startOffset : '';
 
-    const priorityLabel = (list[idx] && list[idx].priority && typeof list[idx].priority.score === 'number') ? (list[idx].priority.score >= 0.85 ? 'High' : list[idx].priority.score >= 0.6 ? 'Medium' : 'Low') : 'Unknown';
+    // Debug: log and safely extract priority score
+    const rawItem = list[idx];
+    console.log(`Case ${idx}: priority object =`, rawItem?.priority);
+    
+    let priorityScore = 0;
+    let priorityLabel = 'Unknown';
+    
+    if (rawItem && rawItem.priority) {
+      if (typeof rawItem.priority.score === 'number') {
+        priorityScore = rawItem.priority.score;
+      } else if (typeof rawItem.priority === 'number') {
+        priorityScore = rawItem.priority;
+      }
+    }
+    
+    // Map score to label (0.85+ = High, 0.60-0.84 = Medium, < 0.60 = Low)
+    if (priorityScore >= 0.85) priorityLabel = 'High';
+    else if (priorityScore >= 0.60) priorityLabel = 'Medium';
+    else if (priorityScore > 0) priorityLabel = 'Low';
+    
+    console.log(`Case ${idx}: score=${priorityScore}, label=${priorityLabel}`);
+    
     const status = list[idx] && list[idx].status ? list[idx].status : 'Pending';
 
     const timeHtml = `<div class="time-cell"><div class="time-text">${s.startStr || ''} - ${s.endStr || ''}</div><div class="time-bar"><div class="time-fill" style="width:${(s.estimatedTime / DAY_AVAILABLE_MINUTES) * 100}%"></div></div></div>`;
