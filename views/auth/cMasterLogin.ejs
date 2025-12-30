@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="/CSS/authstyles.css" />
+  <title>NyaayDrishti | Courtmaster Login</title>
+
+  <!-- KEEP SAME STYLES (unchanged) -->
+  
+</head>
+<body>
+  <div class="auth-container">
+    <div class="header">
+      <h1>NyaayDrishti</h1>
+      <p>Registry Personnel Portal</p>
+    </div>
+
+
+    <div class="form-container">
+      <div id="security-badge" class="hidden"></div>
+
+      <!-- ERROR MESSAGE DISPLAY -->
+      <% if(error && error.length > 0) { %>
+        <div class="error-message">
+          <p><%= error[0] %></p>
+        </div>
+      <% } %>
+      <p class="auth-notice">🔒 Authorized registry personnel only</p>
+      <form method="GET" action="/cMasterDashboard">
+        <div class="form-group">
+          <label id="login-identifier-label">Official Judicial ID</label>
+          <input
+            type="text"
+            name="judicial_id"
+            id="login-identifier"
+            required
+          />
+          <span class="helper-text" id="login-helper"></span>
+        </div>
+
+        <div class="form-group">
+          <label>Password</label>
+          <input type="password" name="password" required />
+        </div>
+
+        <button type="submit" class="submit-btn" id="login-btn">
+          Login to Registry Dashboard
+        </button>
+        
+        <div class="demo-data">
+          Demo Data:<br>
+          Judicial ID: "RameshVerma@court.com"<br>
+          Password: "court123"
+        </div>
+
+        <div class="disclaimer hidden" id="judge-disclaimer">
+          This system facilitates case management and does not assist in judicial decision-making.
+        </div>
+      </form>
+
+      <div id="error-popup" class="error-popup hidden">
+        <p id="error-text"></p>
+        <button onclick="closeError()">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Initialize form on page load
+    document.addEventListener('DOMContentLoaded', function() {
+      const label = document.getElementById('login-identifier-label');
+      const helper = document.getElementById('login-helper');
+      const btn = document.getElementById('login-btn');
+      const signup = document.getElementById('signup-link');
+      const badge = document.getElementById('security-badge');
+      const disclaimer = document.getElementById('judge-disclaimer');
+
+      badge.classList.add('hidden');
+      disclaimer.classList.add('hidden');
+      signup.classList.remove('hidden');
+
+      label.textContent = 'Official Judicial ID';
+      helper.textContent = 'Enter your official judicial ID';
+      btn.textContent = 'Login to Registry Dashboard';
+
+      // Add form submit listener for demo validation
+      document.querySelector('form').addEventListener('submit', function(e) {
+        const judicialId = document.getElementById('login-identifier').value;
+        const password = document.querySelector('input[name="password"]').value;
+
+        if (judicialId === 'courtmaster@court.com' && password === 'court123') {
+          // Allow form submission
+        } else {
+          e.preventDefault();
+          showError('Invalid credentials. Please use the demo data provided.');
+        }
+      });
+    });
+
+    function showError(msg) {
+      document.getElementById('error-text').textContent = msg;
+      document.getElementById('error-popup').classList.remove('hidden');
+    }
+
+    function closeError() {
+      document.getElementById('error-popup').classList.add('hidden');
+    }
+  </script>
+</body>
+</html>

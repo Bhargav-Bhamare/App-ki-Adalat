@@ -75,11 +75,19 @@ app.get("/lawyerDashboard",(req,res) =>{
 });
 
 app.get("/judgeDashboard",(req,res) =>{
-    res.render("judge/judgeDash.ejs");
+    res.render("judge/judgeDashs.ejs");
 });
 
 app.get("/cMasterDashboard",(req,res) =>{
     res.render("cMaster/cMasterDash.ejs");
+});
+
+app.get("/judgeLogin",(req,res) =>{
+    res.render("auth/judgeLogin.ejs");
+});
+
+app.get("/cMasterLogin",(req,res) =>{
+    res.render("auth/cMasterLogin.ejs");
 });
 
 app.listen(8080,()=>{
