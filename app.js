@@ -76,6 +76,10 @@ app.get("/judgeDashboard",(req,res) =>{
     res.render("judge/judgeDash.ejs");
 });
 
+app.get("/cMasterDashboard",(req,res) =>{
+    res.render("cMaster/cMasterDash.ejs");
+});
+
 app.listen(8080,()=>{
     console.log("Listening to port Successfully!");
 });

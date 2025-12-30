@@ -22,15 +22,21 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
-const caseSchema = new Schema(
-  {
-    // 🔹 Phase 2 Core Identifiers
-    diaryNumber: {
-      type: String,
+const caseSchema = new Schema({
+    // 🔹 Who filed the case
+    lawyerId: {
+        type: Schema.Types.ObjectId,
+        ref: 'Lawyer',
+        required: true
+    },
+    
+    filedBy: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
       required: true,
-      unique: true,
     },
 
+    // 🔹 Case identification
     caseNumber: {
       type: String,
       default: null, // generated after scrutiny approval
@@ -41,20 +47,28 @@ const caseSchema = new Schema(
       default: null,
     },
 
-    // 🔹 Who filed the case
-    filedBy: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "User",
-      required: true,
+    // 🔹 Case basic information
+    caseType: { 
+        type: String, 
+        required: true 
+    },
+    
+    courtType: { 
+        type: String, 
+        required: true 
+    },
+    
+    petitioner: { 
+        type: String, 
+        required: true 
+    },
+    
+    respondent: { 
+        type: String, 
+        required: true 
     },
 
-    // 🔹 Case basic classification
-    caseType: {
-      type: String,
-      required: true,
-    },
-
-    // 🔹 Phase 2 Workflow State
+    // 🔹 Case workflow and status
     scrutinyStatus: {
       type: String,
       enum: ["PENDING", "UNDER_OBJECTION", "APPROVED"],
@@ -70,8 +84,35 @@ const caseSchema = new Schema(
       type: String,
       default: "ACTIVE",
     },
-  },
-  { timestamps: true }
-);
+
+    // 🔹 Hearing details
+    nextHearingDate: { 
+        type: Date, 
+        required: false 
+    },
+    
+    timeSlot: { 
+        type: String, 
+        required: false 
+    },
+
+    // 🔹 Financial and document details
+    courtFee: { 
+        type: Number, 
+        required: false 
+    },
+    
+    affidavitId: { 
+        type: Number, 
+        required: false 
+    },
+    
+    vakalatnamaNumber: { 
+        type: Number, 
+        required: false 
+    }
+}, { 
+    timestamps: true 
+});
 
 module.exports = mongoose.model("Case", caseSchema);
