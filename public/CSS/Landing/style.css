@@ -107,8 +107,10 @@ a:hover {
   color: var(--primary-navy);
 }
 
-.logo-icon {
-  font-size: 2rem;
+.logo-icon img{
+  padding-top: 10px;
+  height: 75px;
+  width: 65px;
 }
 
 .nav-menu {
