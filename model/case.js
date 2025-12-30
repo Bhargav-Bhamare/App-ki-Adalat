@@ -2,6 +2,11 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 const caseSchema = new Schema({
+    lawyerId: {
+        type: Schema.Types.ObjectId,
+        ref: 'Lawyer',
+        required: true
+    },
     caseType: { type: String, required: true },
     courtType: { type: String, required: true },
     caseNumber: { type: String, required: true },

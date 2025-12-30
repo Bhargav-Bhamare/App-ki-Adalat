@@ -209,12 +209,44 @@ function loadRecentCases(cases) {
         // Modal Functions
         function openCaseDetail(caseNumber) {
             const caseData = (window.allCases || []).find(c => c.caseNumber === caseNumber);
-            if (!caseData) return;
+            if (!caseData) {
+                alert('Case data not found');
+                return;
+            }
             
             const modal = document.getElementById('caseDetailModal');
             if (modal) {
+                // Update modal title
+                modal.querySelector('.modal-title').textContent = `Case Details - ${caseData.caseNumber}`;
+                
+                // Update case details
+                const detailLabels = modal.querySelectorAll('.case-detail-item');
+                if (detailLabels.length >= 4) {
+                    // Case Type
+                    detailLabels[0].querySelector('.detail-value').textContent = caseData.caseType || 'N/A';
+                    // Current Stage
+                    detailLabels[1].querySelector('.detail-value').textContent = caseData.stage || 'N/A';
+                    // Court Type
+                    detailLabels[2].querySelector('.detail-value').textContent = caseData.courtType || 'N/A';
+                    // Filed On (nextHearingDate)
+                    const filedDate = caseData.nextHearingDate ? new Date(caseData.nextHearingDate).toLocaleDateString() : 'N/A';
+                    detailLabels[3].querySelector('.detail-value').textContent = filedDate;
+                }
+                
+                // Update parties info
+                const partySection = Array.from(modal.querySelectorAll('.section')).find(s => 
+                    s.textContent.includes('Parties & Advocates')
+                );
+                if (partySection) {
+                    const paragraphs = partySection.querySelectorAll('p');
+                    if (paragraphs.length >= 3) {
+                        paragraphs[0].innerHTML = `<strong>Petitioner:</strong> ${caseData.petitioner || 'N/A'}`;
+                        paragraphs[1].innerHTML = `<strong>Respondent:</strong> ${caseData.respondent || 'N/A'}`;
+                        paragraphs[2].innerHTML = `<strong>Status:</strong> ${caseData.status || 'N/A'}`;
+                    }
+                }
+                
                 modal.style.display = 'block';
-                modal.querySelector('.modal-title').textContent = `Case Details - ${caseNumber}`;
             }
         }
 

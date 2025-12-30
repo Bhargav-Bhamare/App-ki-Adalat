@@ -283,10 +283,10 @@
                     <h2 class="section-title">File New Case</h2>
                 </div>
 
-                <form class="filing-form">
+                <form class="filing-form" id="fileCaseForm">
                     <div class="form-group">
                         <label>Step 1: Case Type Selection</label>
-                        <select required>
+                        <select name="caseType" required>
                             <option value="">Select Case Type</option>
                             <option value="civil">Civil Suit</option>
                             <option value="criminal">Criminal Case</option>
@@ -297,8 +297,8 @@
                     </div>
 
                     <div class="form-group">
-                        <label>Step 2: Court & Jurisdiction</label>
-                        <select required>
+                        <label>Step 2: Court Type & Jurisdiction</label>
+                        <select name="courtType" required>
                             <option value="">Select Court</option>
                             <option value="district">District Court</option>
                             <option value="high">High Court</option>
@@ -308,44 +308,95 @@
 
                     <div class="form-group">
                         <label>Step 3: Petitioner Details</label>
-                        <input type="text" placeholder="Petitioner Name" required>
+                        <input type="text" name="petitioner" placeholder="Petitioner Name" required>
                     </div>
 
                     <div class="form-group">
                         <label>Respondent Details</label>
-                        <input type="text" placeholder="Respondent Name" required>
+                        <input type="text" name="respondent" placeholder="Respondent Name" required>
                     </div>
 
                     <div class="form-group">
-                        <label>Step 4: Upload Petition</label>
-                        <input type="file" accept=".pdf">
+                        <label>Case Stage</label>
+                        <select name="stage" required>
+                            <option value="">Select Case Stage</option>
+                            <option value="filing">Filing</option>
+                            <option value="admission">Admission</option>
+                            <option value="hearing">Hearing</option>
+                            <option value="judgment">Judgment</option>
+                            <option value="appeal">Appeal</option>
+                        </select>
                     </div>
 
                     <div class="form-group">
-                        <label>Upload Affidavit ID</label>
-                        <input type="number" required>
+                        <label>Next Hearing Date</label>
+                        <input type="date" name="nextHearingDate" required>
                     </div>
 
                     <div class="form-group">
-                        <label>Step 5: Attach Vakalatnama Number</label>
-                        <input type="number" required>
+                        <label>Time Slot</label>
+                        <select name="timeSlot" required>
+                            <option value="">Select Time Slot</option>
+                            <option value="09:00 AM - 11:00 AM">09:00 AM - 11:00 AM</option>
+                            <option value="11:00 AM - 01:00 PM">11:00 AM - 01:00 PM</option>
+                            <option value="02:00 PM - 04:00 PM">02:00 PM - 04:00 PM</option>
+                            <option value="04:00 PM - 06:00 PM">04:00 PM - 06:00 PM</option>
+                        </select>
                     </div>
 
                     <div class="form-group">
-                        <label>Step 6: Court Fee Details</label>
-                        <input type="number" placeholder="Fee Amount" required>
+                        <label>Affidavit ID (Optional)</label>
+                        <input type="number" name="affidavitId" placeholder="Affidavit ID">
                     </div>
 
                     <div class="form-group">
-                        <label>Case Summary</label>
-                        <textarea placeholder="Brief description of the case" required></textarea>
+                        <label>Vakalatnama Number (Optional)</label>
+                        <input type="number" name="vakalatnamaNumber" placeholder="Vakalatnama Number">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Court Fee (Optional)</label>
+                        <input type="number" name="courtFee" placeholder="Fee Amount" min="0">
                     </div>
 
                     <div class="case-actions">
-                        <button type="button" class="btn btn-outline">Save as Draft</button>
+                        <button type="reset" class="btn btn-outline">Clear Form</button>
                         <button type="submit" class="btn btn-primary">Submit for Filing</button>
                     </div>
                 </form>
+
+                <script>
+                document.getElementById('fileCaseForm').addEventListener('submit', async function(e) {
+                    e.preventDefault();
+                    
+                    const formData = new FormData(this);
+                    const data = Object.fromEntries(formData);
+                    
+                    try {
+                        const response = await fetch('/api/file-case', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify(data)
+                        });
+                        
+                        const result = await response.json();
+                        
+                        if (result.success) {
+                            alert('✓ Case filed successfully!\n\nCase Number: ' + result.caseNumber + '\nDiary Number: ' + result.diaryNumber);
+                            this.reset();
+                            // Reload cases
+                            location.reload();
+                        } else {
+                            alert('✗ Error: ' + (result.error || 'Failed to file case'));
+                        }
+                    } catch (error) {
+                        console.error('Error:', error);
+                        alert('✗ Error: ' + error.message);
+                    }
+                });
+                </script>
 
                 <div class="section" style="margin-top: 2rem; background-color: var(--light-blue);">
                     <h3 style="color: var(--primary-navy); margin-bottom: 1rem;">After Submission</h3>
