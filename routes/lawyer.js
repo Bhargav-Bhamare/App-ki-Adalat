@@ -7,7 +7,7 @@ const { saveRedirectUrl } = require("../middlewares.js");
 const LawyerController = require("../controllers/lawyer.js");
 const dashboardController = require("../controllers/dashboardController.js");
 
-// Authentication routes - LAWYER ONLY
+// Authentication routes - SIGNUP & LOGIN
 router
     .route("/signup")
     .get( LawyerController.renderSignUp )
@@ -21,15 +21,6 @@ router
         LawyerController.login );
 
 router.get("/logout", LawyerController.logout);
-
-// Dashboard routes - Protected routes (require authentication)
-router.get("/lawyerDashboard", (req, res) => {
-    if (!req.user) {
-        req.flash("error", "Please login first");
-        return res.redirect("/login");
-    }
-    res.render("lawyer/lawyerDash");
-});
 
 // API endpoints for dashboard data
 router.get("/api/dashboard-data", wrapAsync(dashboardController.getLawyerDashboardData));

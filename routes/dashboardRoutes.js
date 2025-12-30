@@ -8,8 +8,7 @@ router.get(
   isAuth,
   checkRole("JUDGE"),
   (req, res) => {
-    res.render("judge/dashboard");
-    res.send("Judge dashboard — coming soon");
+    res.render("judge/judgeDash");
   }
 );
 
@@ -27,8 +26,7 @@ router.get(
   isAuth,
   checkRole("COURTMASTER"),
   (req, res) => {
-    res.render("courtmaster/dashboard");
-    res.send("CourtMaster dashboard — coming soon");
+    res.render("cMaster/cMasterDash");
   }
 );
 

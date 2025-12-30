@@ -93,30 +93,6 @@ app.get("/",(req,res)=> {
     res.render("landing.ejs");
 });
 
-app.get("/lawyerDashboard", (req, res) =>{
-  if (!req.user) {
-    req.flash("error", "Please login to access the Lawyer Dashboard");
-    return res.redirect('/login');
-  }
-  res.render("lawyer/lawyerDash.ejs");
-});
-
-app.get("/judgeDashboard",(req,res) =>{
-    res.render("judge/judgeDash.ejs");
-});
-
-app.get("/cMasterDashboard",(req,res) =>{
-    res.render("cMaster/cMasterDash.ejs");
-});
-
-app.get("/judgeLogin",(req,res) =>{
-    res.render("auth/judgeLogin.ejs");
-});
-
-app.get("/cMasterLogin",(req,res) =>{
-    res.render("auth/cMasterLogin.ejs");
-});
-
 app.listen(8080,()=>{
     console.log("Listening to port Successfully!");
 });

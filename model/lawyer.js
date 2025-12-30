@@ -48,6 +48,11 @@ const lawyerSchema = new mongoose.Schema(
       type: Boolean,
       default: true
     },
+    role: {
+      type: String,
+      enum: ['LAWYER', 'JUDGE', 'COURTMASTER'],
+      default: 'LAWYER'
+    },
     vakalatnamaValidity: Date,
     profilePicture: String
   },
