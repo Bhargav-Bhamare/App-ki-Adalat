@@ -32,15 +32,15 @@
         <!-- Top Bar -->
         <div class="top-bar">
             <div class="welcome-text">
-                <h1>Welcome, Adv. Rajesh Kumar</h1>
-                <p>Sunday, December 28, 2025</p>
+                <h1>Welcome, <span id="lawyerName">Advocate</span></h1>
+                <p id="currentDate">Sunday, December 28, 2025</p>
             </div>
             <div class="user-profile">
                 <div class="notification-badge" onclick="showSection('notifications')">
                     🔔
-                    <span class="badge-count">5</span>
+                    <span class="badge-count" id="notificationCount">5</span>
                 </div>
-                <div class="user-avatar">RK</div>
+                <div class="user-avatar" id="userInitials">--</div>
             </div>
         </div>
 
@@ -630,7 +630,7 @@
 
                 <div class="form-group">
                     <label>Advocate Name</label>
-                    <input type="text" value="Rajesh Kumar" readonly>
+                    <input type="text" id="advocateName" value="Rajesh Kumar" readonly>
                 </div>
 
                 <div class="form-group">
@@ -645,12 +645,12 @@
 
                 <div class="form-group">
                     <label>Email</label>
-                    <input type="email" value="rajesh.kumar@legalfirm.com">
+                    <input type="email" id="advocateEmail" value="rajesh.kumar@legalfirm.com">
                 </div>
 
                 <div class="form-group">
                     <label>Mobile Number</label>
-                    <input type="tel" value="+91 98765 43210">
+                    <input type="tel" id="advocateMobile" value="+91 98765 43210">
                 </div>
 
                 <div class="form-group">

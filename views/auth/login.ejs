@@ -16,17 +16,20 @@
       <p>Judicial Workflow Management System</p>
     </div>
 
-    <!-- ROLE SELECTOR (UI ONLY) -->
+    <!-- ROLE SELECTOR - LAWYER ONLY -->
     <div class="role-selector">
-      <button class="role-tab active" data-role="lawyer" onclick="switchRole('lawyer')">Lawyer</button>
-      <button class="role-tab" data-role="court-master" onclick="switchRole('court-master')">Court Master</button>
-      <button class="role-tab" data-role="judge" onclick="switchRole('judge')">Judge</button>
+      <button class="role-tab active" data-role="lawyer" onclick="switchRole('lawyer')">⚖️ Advocate Login</button>
     </div>
 
     <div class="form-container">
       <div id="security-badge" class="hidden"></div>
 
-      <!-- IMPORTANT: backend expects `email` -->
+      <!-- ERROR MESSAGE DISPLAY -->
+      <% if(error && error.length > 0) { %>
+        <div class="error-message">
+          <p><%= error[0] %></p>
+        </div>
+      <% } %>
       <form method="POST" action="/login">
         <div class="form-group">
           <label id="login-identifier-label">Email</label>
@@ -63,16 +66,9 @@
     let currentRole = 'lawyer';
 
     function switchRole(role) {
-      currentRole = role;
-
-      document.querySelectorAll('.role-tab').forEach(tab =>
-        tab.classList.remove('active')
-      );
-      document
-        .querySelector(`[data-role="${role}"]`)
-        .classList.add('active');
-
-      updateLoginForm(role);
+      // Lawyer login only - no role switching
+      currentRole = 'lawyer';
+      updateLoginForm('lawyer');
     }
 
     function updateLoginForm(role) {
@@ -92,26 +88,12 @@
         helper.textContent = 'Use your registered email address';
         btn.textContent = 'Login as Advocate';
       }
-
-      if (role === 'court-master') {
-        signup.classList.add('hidden');
-        badge.classList.remove('hidden');
-        badge.className = 'security-badge restricted';
-        badge.innerHTML = '🔒 Restricted Access — Registry Personnel Only';
-        btn.textContent = 'Login to Registry Dashboard';
-      }
-
-      if (role === 'judge') {
-        signup.classList.add('hidden');
-        badge.classList.remove('hidden');
-        badge.className = 'security-badge restricted';
-        badge.innerHTML = '⚖️ Judicial Access — Confidential System';
-        disclaimer.classList.remove('hidden');
-        btn.textContent = 'Access Court Dashboard';
-      }
     }
 
-    updateLoginForm('lawyer');
+    // Initialize form on page load
+    document.addEventListener('DOMContentLoaded', function() {
+      updateLoginForm('lawyer');
+    });
   </script>
 </body>
 </html>

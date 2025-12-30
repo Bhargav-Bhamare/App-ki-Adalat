@@ -51,7 +51,7 @@ app.use(flash());
 //All related to Passport
 app.use(passport.initialize());
 app.use(passport.session());
-passport.use(new LocalStrategy(Lawyer.authenticate()));
+passport.use(new LocalStrategy({ usernameField: 'email' }, Lawyer.authenticate()));
 passport.serializeUser(Lawyer.serializeUser());
 passport.deserializeUser(Lawyer.deserializeUser());
 
