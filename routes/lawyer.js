@@ -41,4 +41,12 @@ router.get("/api/case-priority/:caseId", wrapAsync(dashboardController.getCasePr
 router.post("/api/file-case", wrapAsync(dashboardController.fileNewCase));
 router.post("/api/update-profile", wrapAsync(dashboardController.updateLawyerProfile));
 
+// Court Master action endpoint (lightweight acknowledgement)
+router.post('/api/case-action/:caseId', async (req, res) => {
+    const caseId = req.params.caseId;
+    const { action, extendMinutes } = req.body || {};
+    // For now, just acknowledge. Future: persist action or re-run scheduler.
+    res.json({ success: true, caseId, action: action || null, extendMinutes: extendMinutes || null });
+});
+
 module.exports = router;

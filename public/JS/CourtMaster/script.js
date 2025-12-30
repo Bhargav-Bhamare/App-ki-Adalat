@@ -1,3 +1,5 @@
+    import '/JS/cMaster.js';
+
         // Smooth scrolling to sections
         function scrollToSection(sectionId) {
             document.getElementById(sectionId).scrollIntoView({
