@@ -1,3 +1,7 @@
+if (process.env.NODE_ENV !== "production") {
+  require('dotenv').config();
+}
+
 const express = require("express");
 const app = express();
 const mongoose = require("mongoose");
@@ -12,7 +16,7 @@ const Lawyer = require("./model/lawyer.js");
 //Router Requirement
 const dashboardRoutes = require("./routes/dashboardRoutes");
 const lawyerRouter = require("./routes/lawyer.js");
-
+const dbUrl = process.env.ATLASDB_URL || process.env.MONGO_URI || 'mongodb://localhost:27017/NyaayDrishti';
 const session = require("express-session");
 
 //IMP Middlewares - MUST come before routes
@@ -31,14 +35,32 @@ main()
 
 
 async function main() {
-  await mongoose.connect("mongodb://localhost:27017/NyaayDrishti");
+  try {
+    // Recent MongoDB drivers / Mongoose versions manage parser/topology options internally.
+    // Do not pass legacy options that the driver may reject.
+    await mongoose.connect(dbUrl);
+  } catch (err) {
+    console.error('MongoDB connection error:', err);
+    throw err;
+  }
 };
+
+// // MongoStore Options
+// const store = MongoStore.create({
+//     mongoUrl: dbUrl,
+//     secret: process.env.SECRET,
+    
+//     touchAfter: 24 * 3600,
+// });
+// store.on("error", (err)=>{
+//     console.log("Error in MONGO SESSION STORE!",err);
+// });
 
 //Session Configuration
 app.use(
   session({
-    name: "judicial-session",
-    secret: "hackathon-secret-key",
+    // store,
+    secret: process.env.SECRET || 'hackathon-secret-key',
     resave: false,
     saveUninitialized: false,
     cookie: {
