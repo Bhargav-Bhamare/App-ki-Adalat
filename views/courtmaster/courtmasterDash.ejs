@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Court Master Dashboard - Nyaya-Setu</title>
+    <link rel="stylesheet" href="/CSS/Courtmaster/style.css" />
+</head>
+<body>
+    <!-- Header -->
+    <div class="header">
+        <div class="header-content">
+            <div class="header-title">
+                <h1 class="main-title">NyaayDrishti</h1>
+                <p class="header-subtitle">Court Master Portal</p>
+            </div>
+            <div class="user-info">
+                <p><strong>Ramesh Kumar Verma</strong></p>
+                <p>Court Master | District Court, New Delhi</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <!-- Dashboard Tiles -->
+        <div class="dashboard-tiles">
+            <!-- Cause List Tile -->
+            <div class="tile cause-list-tile" onclick="scrollToSection('cause-list')">
+                <div class="tile-header">
+                    <div class="tile-icon">📋</div>
+                    <h3 class="tile-title">Today's Cause List</h3>
+                </div>
+                <p class="tile-description">Manage and track today's scheduled cases with real-time status updates and comprehensive case management tools.</p>
+                <div class="tile-stats">
+                    <span class="tile-count">32</span>
+                    <button class="tile-action">View List</button>
+                </div>
+            </div>
+
+            <!-- Scrutiny Queue Tile -->
+            <div class="tile scrutiny-tile" onclick="scrollToSection('scrutiny-queue')">
+                <div class="tile-header">
+                    <div class="tile-icon">🔍</div>
+                    <h3 class="tile-title">Scrutiny Queue</h3>
+                </div>
+                <p class="tile-description">Review and process pending case filings, applications, and documents requiring judicial scrutiny and approval.</p>
+                <div class="tile-stats">
+                    <span class="tile-count">15</span>
+                    <button class="tile-action">Process Queue</button>
+                </div>
+            </div>
+
+            <!-- Hearing Coordination Tile -->
+            <div class="tile coordination-tile" onclick="scrollToSection('hearing-coordination')">
+                <div class="tile-header">
+                    <div class="tile-icon">⚖️</div>
+                    <h3 class="tile-title">Hearing Coordination</h3>
+                </div>
+                <p class="tile-description">Coordinate hearing schedules, manage court room assignments, and track hearing status across all proceedings.</p>
+                <div class="tile-stats">
+                    <span class="tile-count">28</span>
+                    <button class="tile-action">Coordinate</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Quick Filters -->
+        <div class="filters-bar">
+            <div class="filter-group">
+                <label class="filter-label">Priority:</label>
+                <select class="filter-select" id="priority-filter">
+                    <option value="">All Priorities</option>
+                    <option value="high">🔴 High Priority</option>
+                    <option value="medium">🟡 Medium Priority</option>
+                    <option value="low">🟢 Low Priority</option>
+                </select>
+            </div>
+            <div class="filter-group">
+                <label class="filter-label">Stage:</label>
+                <select class="filter-select" id="stage-filter">
+                    <option value="">All Stages</option>
+                    <option value="admission">Admission</option>
+                    <option value="evidence">Evidence</option>
+                    <option value="arguments">Arguments</option>
+                </select>
+            </div>
+            <div class="filter-group">
+                <label class="filter-label">Advocate:</label>
+                <input type="text" class="filter-input" id="advocate-search" placeholder="Search advocate name...">
+            </div>
+            <div class="filter-group">
+                <label class="filter-label">Pending Only:</label>
+                <label class="toggle-switch">
+                    <input type="checkbox" id="pending-toggle">
+                    <span class="toggle-slider"></span>
+                </label>
+            </div>
+        </div>
+
+        <!-- Today's Cause List Section -->
+        <div class="section" id="cause-list">
+            <div class="section-header">
+                <h2 class="section-title">Today's Cause List</h2>
+                <div class="quick-actions">
+                    <button class="btn btn-primary btn-sm">Export PDF</button>
+                    <button class="btn btn-secondary btn-sm">Print List</button>
+                </div>
+            </div>
+            <div class="table-container">
+                <table id="cause-list-table">
+                    <thead>
+                        <tr>
+                            <th>S.No</th>
+                            <th>Case Number</th>
+                            <th>Case Title</th>
+                            <th>Stage</th>
+                            <th>Priority</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="case-row" data-case-id="1">
+                            <td>1</td>
+                            <td><strong>CS/45/2024</strong></td>
+                            <td>Ram Lal vs. State</td>
+                            <td>Admission</td>
+                            <td><span class="priority-badge priority-high"></span>High</td>
+                            <td><span class="status-badge status-pending">Pending</span></td>
+                            <td>
+                                <div class="action-buttons">
+                                    <button class="btn btn-call btn-sm">Call</button>
+                                    <button class="btn btn-pass btn-sm">Pass</button>
+                                    <button class="btn btn-adjourn btn-sm">Adjourn</button>
+                                    <button class="btn btn-heard btn-sm">Heard</button>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr class="case-row" data-case-id="2">
+                            <td>2</td>
+                            <td><strong>CRM/112/2024</strong></td>
+                            <td>State vs. Mohan Kumar</td>
+                            <td>Evidence</td>
+                            <td><span class="priority-badge priority-medium"></span>Medium</td>
+                            <td><span class="status-badge status-pending">Pending</span></td>
+                            <td>
+                                <div class="action-buttons">
+                                    <button class="btn btn-call btn-sm">Call</button>
+                                    <button class="btn btn-pass btn-sm">Pass</button>
+                                    <button class="btn btn-adjourn btn-sm">Adjourn</button>
+                                    <button class="btn btn-heard btn-sm">Heard</button>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr class="case-row" data-case-id="3">
+                            <td>3</td>
+                            <td><strong>MA/78/2024</strong></td>
+                            <td>Divya Sharma vs. Rajesh Sharma</td>
+                            <td>Arguments</td>
+                            <td><span class="priority-badge priority-low"></span>Low</td>
+                            <td><span class="status-badge status-pending">Pending</span></td>
+                            <td>
+                                <div class="action-buttons">
+                                    <button class="btn btn-call btn-sm">Call</button>
+                                    <button class="btn btn-pass btn-sm">Pass</button>
+                                    <button class="btn btn-adjourn btn-sm">Adjourn</button>
+                                    <button class="btn btn-heard btn-sm">Heard</button>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr class="case-row" data-case-id="4">
+                            <td>4</td>
+                            <td><strong>WP/234/2024</strong></td>
+                            <td>Kumar Industries vs. Municipal Corporation</td>
+                            <td>Admission</td>
+                            <td><span class="priority-badge priority-high"></span>High</td>
+                            <td><span class="status-badge status-pending">Pending</span></td>
+                            <td>
+                                <div class="action-buttons">
+                                    <button class="btn btn-call btn-sm">Call</button>
+                                    <button class="btn btn-pass btn-sm">Pass</button>
+                                    <button class="btn btn-adjourn btn-sm">Adjourn</button>
+                                    <button class="btn btn-heard btn-sm">Heard</button>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr class="case-row" data-case-id="5">
+                            <td>5</td>
+                            <td><strong>EP/156/2024</strong></td>
+                            <td>Bank of India vs. Mehta Traders</td>
+                            <td>Evidence</td>
+                            <td><span class="priority-badge priority-medium"></span>Medium</td>
+                            <td><span class="status-badge status-pending">Pending</span></td>
+                            <td>
+                                <div class="action-buttons">
+                                    <button class="btn btn-call btn-sm">Call</button>
+                                    <button class="btn btn-pass btn-sm">Pass</button>
+                                    <button class="btn btn-adjourn btn-sm">Adjourn</button>
+                                    <button class="btn btn-heard btn-sm">Heard</button>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Scrutiny Queue Section -->
+        <div class="section" id="scrutiny-queue">
+            <div class="section-header">
+                <h2 class="section-title">Scrutiny Queue</h2>
+                <div class="quick-actions">
+                    <button class="btn btn-secondary btn-sm">Filter by Category</button>
+                    <button class="btn btn-secondary btn-sm">Export List</button>
+                </div>
+            </div>
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Diary No.</th>
+                            <th>Filing Date</th>
+                            <th>Case Category</th>
+                            <th>Advocate Name</th>
+                            <th>Days Pending</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>DRY/2024/00345</strong></td>
+                            <td>28-Dec-2024</td>
+                            <td>Civil Suit</td>
+                            <td>Adv. Priya Sharma</td>
+                            <td>2 days</td>
+                            <td><span class="status-badge status-pending">Pending Scrutiny</span></td>
+                            <td>
+                                <div class="action-buttons">
+                                    <button class="btn btn-view btn-sm">View</button>
+                                    <button class="btn btn-approve btn-sm">Approve</button>
+                                    <button class="btn btn-object btn-sm">Object</button>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><strong>DRY/2024/00342</strong></td>
+                            <td>26-Dec-2024</td>
+                            <td>Criminal Misc.</td>
+                            <td>Adv. Rajesh Gupta</td>
+                            <td class="tension-high">4 days</td>
+                            <td><span class="status-badge status-pending">Pending Scrutiny</span></td>
+                            <td>
+                                <div class="action-buttons">
+                                    <button class="btn btn-view btn-sm">View</button>
+                                    <button class="btn btn-approve btn-sm">Approve</button>
+                                    <button class="btn btn-object btn-sm">Object</button>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><strong>DRY/2024/00338</strong></td>
+                            <td>24-Dec-2024</td>
+                            <td>Matrimonial</td>
+                            <td>Adv. Meena Kapoor</td>
+                            <td class="tension-high">6 days</td>
+                            <td><span class="status-badge status-pending">Pending Scrutiny</span></td>
+                            <td>
+                                <div class="action-buttons">
+                                    <button class="btn btn-view btn-sm">View</button>
+                                    <button class="btn btn-approve btn-sm">Approve</button>
+                                    <button class="btn btn-object btn-sm">Object</button>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><strong>DRY/2024/00335</strong></td>
+                            <td>27-Dec-2024</td>
+                            <td>Execution Petition</td>
+                            <td>Adv. Suresh Nair</td>
+                            <td>3 days</td>
+                            <td><span class="status-badge status-pending">Pending Scrutiny</span></td>
+                            <td>
+                                <div class="action-buttons">
+                                    <button class="btn btn-view btn-sm">View</button>
+                                    <button class="btn btn-approve btn-sm">Approve</button>
+                                    <button class="btn btn-object btn-sm">Object</button>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Hearing Coordination Section -->
+        <div class="section" id="hearing-coordination">
+            <div class="section-header">
+                <h2 class="section-title">Today's Hearing Coordination</h2>
+                <div class="quick-actions">
+                    <button class="btn btn-primary btn-sm">View Full Schedule</button>
+                    <button class="btn btn-secondary btn-sm">Room Allocation</button>
+                </div>
+            </div>
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Case No.</th>
+                            <th>CNR</th>
+                            <th>Parties</th>
+                            <th>Time Slot</th>
+                            <th>Court Room</th>
+                            <th>Hearing Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>CS/45/2024</strong></td>
+                            <td>DLND01-002345-2024</td>
+                            <td>Ram Lal vs. State</td>
+                            <td>10:30 AM</td>
+                            <td>Court Room 3</td>
+                            <td><span class="status-badge status-pending">Scheduled</span></td>
+                            <td>
+                                <div class="action-buttons">
+                                    <button class="btn btn-view btn-sm">Update Status</button>
+                                    <button class="btn btn-secondary btn-sm">Reschedule</button>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><strong>CRM/112/2024</strong></td>
+                            <td>DLND01-002298-2024</td>
+                            <td>State vs. Mohan Kumar</td>
+                            <td>11:00 AM</td>
+                            <td>Court Room 3</td>
+                            <td><span class="status-badge status-heard">Heard</span></td>
+                            <td>
+                                <div class="action-buttons">
+                                    <button class="btn btn-view btn-sm">View Details</button>
+                                    <button class="btn btn-secondary btn-sm">Generate Order</button>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><strong>MA/78/2024</strong></td>
+                            <td>DLND01-002156-2024</td>
+                            <td>Divya Sharma vs. Rajesh Sharma</td>
+                            <td>11:30 AM</td>
+                            <td>Court Room 2</td>
+                            <td><span class="status-badge status-adjourned">Adjourned</span></td>
+                            <td>
+                                <div class="action-buttons">
+                                    <button class="btn btn-view btn-sm">View Details</button>
+                                    <button class="btn btn-secondary btn-sm">Set Next Date</button>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><strong>WP/234/2024</strong></td>
+                            <td>DLND01-002789-2024</td>
+                            <td>Kumar Industries vs. Municipal Corporation</td>
+                            <td>12:00 PM</td>
+                            <td>Court Room 1</td>
+                            <td><span class="status-badge status-pending">Scheduled</span></td>
+                            <td>
+                                <div class="action-buttons">
+                                    <button class="btn btn-view btn-sm">Update Status</button>
+                                    <button class="btn btn-secondary btn-sm">Reschedule</button>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Daily Closure Panel -->
+        <div class="daily-closure">
+            <h3 class="section-title" style="margin-bottom: 1.5rem;">Daily Closure Summary</h3>
+            <div class="closure-stats">
+                <div class="closure-stat">
+                    <span class="closure-stat-value">32</span>
+                    <span class="closure-stat-label">Total Listed</span>
+                </div>
+                <div class="closure-stat">
+                    <span class="closure-stat-value">18</span>
+                    <span class="closure-stat-label">Cases Heard</span>
+                </div>
+                <div class="closure-stat">
+                    <span class="closure-stat-value">10</span>
+                    <span class="closure-stat-label">Adjourned</span>
+                </div>
+                <div class="closure-stat">
+                    <span class="closure-stat-value">4</span>
+                    <span class="closure-stat-label">Not Reached</span>
+                </div>
+            </div>
+            <button class="closure-btn" onclick="finalizeDay()">Finalize Day's Proceedings</button>
+        </div>
+    </div>
+
+    <script type="module" src="/JS/Courtmaster/script.js"></script>
+ 
+</body>
+</html>

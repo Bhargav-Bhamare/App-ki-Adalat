@@ -1,3 +1,4 @@
+require("dotenv").config();
 const express = require("express");
 const app = express();
 const mongoose = require("mongoose");
@@ -8,6 +9,7 @@ const flash = require("connect-flash");
 const passport = require("passport");
 const LocalStrategy = require("passport-local");
 const Lawyer = require("./model/lawyer.js");
+const lawyerRoutes = require("./routes/lawyerRoutes.js")
 
 //Router Requirement
 const dashboardRoutes = require("./routes/dashboardRoutes");
@@ -23,16 +25,12 @@ app.use(express.urlencoded({extended : true}));
 app.use(express.json());
 app.use(methodOverride("_method"));
 app.use(express.static(path.join(__dirname,"/public")));
+app.use("/lawyer", lawyerRoutes);
 
 //Establishing Connection
-main()
-.then(() => console.log("DataBase Connection Successful!"))
-.catch(err => console.log(err));
+const connectDB = require("./config/db");
+connectDB();
 
-
-async function main() {
-  await mongoose.connect("mongodb://localhost:27017/NyaayDrishti");
-};
 
 //Session Configuration
 app.use(
@@ -77,6 +75,7 @@ app.get("/lawyerDashboard",(req,res) =>{
 app.get("/judgeDashboard",(req,res) =>{
     res.render("judge/judgeDash.ejs");
 });
+
 
 app.listen(8080,()=>{
     console.log("Listening to port Successfully!");
