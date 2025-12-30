@@ -10,6 +10,7 @@ const passport = require("passport");
 const LocalStrategy = require("passport-local");
 const Lawyer = require("./model/lawyer.js");
 const lawyerRoutes = require("./routes/lawyerRoutes.js")
+const authRoutes = require("./routes/authRoutes");
 
 //Router Requirement
 const dashboardRoutes = require("./routes/dashboardRoutes");
@@ -26,6 +27,7 @@ app.use(express.json());
 app.use(methodOverride("_method"));
 app.use(express.static(path.join(__dirname,"/public")));
 app.use("/lawyer", lawyerRoutes);
+app.use("/", authRoutes);
 
 //Establishing Connection
 const connectDB = require("./config/db");
@@ -45,6 +47,7 @@ app.use(
     }
   })
 );
+
 app.use(flash());
 //All related to Passport
 app.use(passport.initialize());

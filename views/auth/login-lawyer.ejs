@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="/CSS/authstyles.css" />
+  <title>NyaayDrishti | Login</title>
+
+  <!-- KEEP SAME STYLES (unchanged) -->
+  
+</head>
+<body>
+  <div class="auth-container">
+    <div class="header">
+      <h1>NyaayDrishti</h1>
+      <p>Judicial Workflow Management System</p>
+    </div>
+
+
+    <div class="form-container">
+      <div id="security-badge" class="hidden"></div>
+
+      <!-- ERROR MESSAGE DISPLAY -->
+      <% if(error && error.length > 0) { %>
+        <div class="error-message">
+          <p><%= error[0] %></p>
+        </div>
+      <% } %>
+      <form method="POST" action="/login">
+        <div class="form-group">
+          <label id="login-identifier-label">Email</label>
+          <input
+            type="email"
+            name="email"
+            id="login-identifier"
+            required
+          />
+          <span class="helper-text" id="login-helper"></span>
+        </div>
+
+        <div class="form-group">
+          <label>Password</label>
+          <input type="password" name="password" required />
+        </div>
+
+        <button type="submit" class="submit-btn" id="login-btn">
+          Login as Advocate
+        </button>
+
+        <div class="secondary-link" id="signup-link">
+          New Advocate? <a href="/signup">Create Account</a>
+        </div>
+
+        <div class="disclaimer hidden" id="judge-disclaimer">
+          This system facilitates case management and does not assist in judicial decision-making.
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    // Initialize form on page load
+    document.addEventListener('DOMContentLoaded', function() {
+      const label = document.getElementById('login-identifier-label');
+      const helper = document.getElementById('login-helper');
+      const btn = document.getElementById('login-btn');
+      const signup = document.getElementById('signup-link');
+      const badge = document.getElementById('security-badge');
+      const disclaimer = document.getElementById('judge-disclaimer');
+
+      badge.classList.add('hidden');
+      disclaimer.classList.add('hidden');
+      signup.classList.remove('hidden');
+
+      label.textContent = 'Email';
+      helper.textContent = 'Use your registered email address';
+      btn.textContent = 'Login as Advocate';
+    });
+  </script>
+</body>
+</html>

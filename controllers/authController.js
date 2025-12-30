@@ -6,6 +6,19 @@ exports.getLogin = (req, res) => {
   res.render("auth/login");
 };
 
+exports.showLawyerLogin = (req, res) => {
+  res.render("auth/login-lawyer");
+};
+
+exports.showCourtMasterLogin = (req, res) => {
+  res.render("auth/login-courtmaster");
+};
+
+exports.showJudgeLogin = (req, res) => {
+  res.render("auth/login-judge");
+};
+
+
 exports.getSignup = (req, res) => {
   res.render("auth/signup");
 };
