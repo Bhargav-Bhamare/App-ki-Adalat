@@ -1,5 +1,6 @@
 const Lawyer = require("../model/lawyer.js");
 const Case = require("../model/case.js");
+const { generateDailyCauseList } = require("../utils/priorityEngine.js");
 
 // Sample data for demonstration (can be replaced with DB queries)
 const sampleCases = [
@@ -168,12 +169,27 @@ exports.getLawyerCases = async (req, res) => {
       return res.status(404).json({ error: "Lawyer not found" });
     }
 
-    // Fetch cases from database for this lawyer
-    const cases = await Case.find({ lawyerId: lawyerId }).sort({ nextHearingDate: 1 });
+    // Fetch cases from database for this lawyer (use .lean() for plain JSON)
+    const cases = await Case.find({ lawyerId: lawyerId }).sort({ nextHearingDate: 1 }).lean();
+
+    // Ensure each case has a string _id and caseNumber fallback
+    const safeCases = (cases || []).map((c, i) => ({
+      _id: c._id ? String(c._id) : `C${i}`,
+      caseNumber: c.caseNumber || `UNDEF-${i}`,
+      petitioner: c.petitioner || '',
+      respondent: c.respondent || '',
+      caseType: c.caseType || '',
+      stage: c.stage || '',
+      nextHearingDate: c.nextHearingDate || null,
+      timeSlot: c.timeSlot || '',
+      status: c.status || '' ,
+      courtType: c.courtType || '',
+      courtFee: c.courtFee || 0
+    }));
 
     res.json({
-      cases: cases,
-      totalCount: cases.length
+      cases: safeCases,
+      totalCount: safeCases.length
     });
   } catch (error) {
     console.error("Error fetching cases:", error);
@@ -313,5 +329,82 @@ exports.updateLawyerProfile = async (req, res) => {
   } catch (error) {
     console.error("Error updating profile:", error);
     res.status(500).json({ error: "Error updating profile" });
+  }
+};
+
+// ==========================================
+// DAILY CAUSE LIST GENERATION
+// ==========================================
+
+/**
+ * Get Daily Cause List for Court Master & Judge
+ * Generates optimized daily schedule based on priority scoring
+ */
+exports.getDailyCauseList = async (req, res) => {
+  try {
+    // Get available court time from query params (default 300 minutes = 5 hours)
+    const availableMinutes = parseInt(req.query.availableMinutes) || 300;
+    
+    // Fetch all pending cases from database as plain objects (.lean())
+    const allCases = await Case.find({
+      status: { $nin: ["Judgment", "Disposed", "Withdrawn"] }
+    }).lean();
+
+    console.log(`getDailyCauseList: fetched ${ (allCases || []).length } cases from DB`);
+    if ((allCases || []).length > 0) console.log('Sample case:', allCases[0]);
+
+    // Defensive: ensure nextHearingDate is Date for priority calculations
+    const preparedCases = (allCases || []).map(c => ({
+      ...c,
+      // convert _id to string to avoid unexpected object shapes in client
+      _id: c._id ? String(c._id) : c._id,
+      nextHearingDate: c.nextHearingDate ? new Date(c.nextHearingDate) : null,
+      createdAt: c.createdAt ? new Date(c.createdAt) : null
+    }));
+
+    // Generate daily cause list using priority engine
+    const dailyCauseListData = generateDailyCauseList(preparedCases, availableMinutes);
+
+    console.log(`getDailyCauseList: generated ${dailyCauseListData.dailyCauseList.length} scheduled cases, totalTimeUsed=${dailyCauseListData.summary.totalMinutesUsed}`);
+
+    res.json({
+      success: true,
+      date: new Date().toLocaleDateString(),
+      data: dailyCauseListData
+    });
+  } catch (error) {
+    console.error("Error generating daily cause list:", error);
+    res.status(500).json({ error: "Error generating daily cause list: " + error.message });
+  }
+};
+
+/**
+ * Get case priority details (for modal/detailed view)
+ */
+exports.getCasePriorityDetails = async (req, res) => {
+  try {
+    const caseId = req.params.caseId;
+    const caseObj = await Case.findById(caseId);
+
+    if (!caseObj) {
+      return res.status(404).json({ error: "Case not found" });
+    }
+
+    const { calculatePriority, estimateCaseTime } = require("../utils/priorityEngine.js");
+    
+    const priority = calculatePriority(caseObj);
+    const estimatedTime = estimateCaseTime(caseObj);
+
+    res.json({
+      success: true,
+      caseNumber: caseObj.caseNumber,
+      priorityScore: priority.score,
+      estimatedTime: estimatedTime,
+      breakdown: priority.breakdown,
+      reasoning: priority.reasoning
+    });
+  } catch (error) {
+    console.error("Error fetching case priority:", error);
+    res.status(500).json({ error: "Error fetching case priority" });
   }
 };

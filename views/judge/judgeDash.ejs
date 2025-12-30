@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>NyaayDrishti- Judge Portal</title>
     <link rel="stylesheet" href="/CSS/Judge/style.css" type="text/css">
+    <link rel="stylesheet" href="/CSS/dailyCauseList.css" type="text/css">
   <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
   <script src="https://cdn.tailwindcss.com" type="text/javascript"></script>
  <!-- Embedded styles for Case Quick View (self-contained, gov-style) -->
@@ -207,13 +208,67 @@
   </div>
   <script src="/_sdk/element_sdk.js"></script>
   <script src="/JS/Judge/script.js"></script>
+  <script src="/JS/dailyCauseList.js"></script>
   <script>
     // Placeholder case data for demo / hackathon
-    const CASES = [
-      { id: 'C1001', caseNumber: '27834', title: 'Ram Kumar vs State of Delhi', category: 'Criminal', priority: 'urgent', stage: 'Admission', petitioner: 'Ram Kumar', respondent: 'State of Delhi', advocates: ['Adv. Thakur (Petitioner)', 'APP Singh (State)'], summary: 'Bail application arising from alleged theft. Complainant alleges involvement of accused in multiple incidents; defence raises jurisdiction and procedural objections. Notice issued; hearing for admission and arguments.', lastOrder: 'Issue notice to police; list for admission.', time: '10:00 AM' },
-      { id: 'C1002', caseNumber: '27835', title: 'Sita Devi vs Ramesh Kumar', category: 'Civil', priority: 'regular', stage: 'Evidence', petitioner: 'Sita Devi', respondent: 'Ramesh Kumar', advocates: ['Adv. Mehra (Petitioner)', 'Adv. Gupta (Respondent)'], summary: 'Civil suit relating to property dispute and partition. Parties have filed evidence; limited witnesses remain to be examined.', lastOrder: 'Evidence to continue; witness 3 to be examined.', time: '10:45 AM' },
-      { id: 'C1003', caseNumber: '27856', title: 'State vs Mohan Lal', category: 'Criminal', priority: 'low', stage: 'Arguments', petitioner: 'State', respondent: 'Mohan Lal', advocates: ['APP Singh (State)', 'Adv. Kumar (Accused)'], summary: 'The matter involves non-violent theft allegations. Arguments on sentence mitigation scheduled.', lastOrder: 'Argument time fixed; 10 minutes each.', time: '11:50 AM' }
-    ];
+    let CASES = [];
+
+    // Load Daily Cause List from priority engine
+    async function loadDailyCauseList() {
+      try {
+        const response = await fetch('/api/daily-cause-list?availableMinutes=300');
+        if (!response.ok) throw new Error('Failed to load daily cause list');
+        
+        const data = await response.json();
+        const causeList = data && data.data && data.data.dailyCauseList ? data.data.dailyCauseList : [];
+
+        // Defensive transform to CASES format (guard against missing fields)
+        if (!Array.isArray(causeList)) {
+          console.warn('Daily cause list not an array:', causeList);
+        }
+
+        CASES = (causeList || []).map((item, index) => {
+          // log raw item when fields are missing for debugging
+          if (!item || !item.caseNumber) {
+            console.warn('Malformed case item in dailyCauseList at index', index, item);
+          }
+
+          const priorityScore = item && item.priority && typeof item.priority.score === 'number' ? item.priority.score : 0;
+
+          return {
+            id: (item && item._id) ? String(item._id) : `C${index}`,
+            caseNumber: item && item.caseNumber ? item.caseNumber : `UNDEF-${index}`,
+            title: `${(item && item.caseType) || 'Unknown'} - ${(item && item.petitioner) || '—'} v/s ${(item && item.respondent) || '—'}`,
+            category: (item && item.caseType) || 'Unknown',
+            priority: getPriorityLevel(priorityScore),
+            stage: (item && item.stage) || 'Unknown',
+            petitioner: (item && item.petitioner) || '—',
+            respondent: (item && item.respondent) || '—',
+            advocates: ['Advocate 1', 'Advocate 2'],
+            summary: `Case Type: ${(item && item.caseType) || '—'}. Petitioner: ${(item && item.petitioner) || '—'}. Respondent: ${(item && item.respondent) || '—'}. Stage: ${(item && item.stage) || '—'}. Priority Score: ${(priorityScore * 100).toFixed(1)}%.`,
+            lastOrder: item && item.startTime ? `Scheduled for ${item.startTime} to ${item.endTime}` : 'No schedule',
+            time: (item && item.startTime) || '',
+            estimatedTime: (item && item.estimatedTime) || 0,
+            priorityScore: priorityScore,
+            priorityReasoning: (item && item.priority && item.priority.reasoning) || (item && item.priorityReasoning) || []
+          };
+        });
+
+        renderCauseTable();
+        if (CASES.length) openCaseQuickView(CASES[0].id, false);
+      } catch (error) {
+        console.error('Error loading daily cause list:', error);
+        // Show error message
+        document.getElementById('causeTableBody').innerHTML = 
+          '<tr><td colspan="5" style="text-align:center; color:red;">Error loading cause list</td></tr>';
+      }
+    }
+
+    function getPriorityLevel(score) {
+      if (score >= 0.85) return 'urgent';
+      if (score >= 0.60) return 'regular';
+      return 'low';
+    }
 
     // Render daily cause list into table
     function renderCauseTable() {
@@ -258,6 +313,25 @@
       document.getElementById('cv_parties').textContent = c.petitioner + ' — ' + c.respondent;
       document.getElementById('cv_advocates').textContent = (c.advocates || []).join(' | ');
       document.getElementById('cv_summary').textContent = c.summary || generateSummary(c);
+      
+      // Add priority details
+      const priorityDetailsEl = document.createElement('div');
+      priorityDetailsEl.innerHTML = `
+        <div class="field-label" style="margin-top: 15px; border-top: 1px solid #e5e7eb; padding-top: 10px;">Priority Score</div>
+        <div class="field-value" style="color: #d32f2f; font-weight: bold; font-size: 18px;">
+          ${(c.priorityScore * 100).toFixed(1)}%
+        </div>
+        <div class="field-label">Priority Factors</div>
+        <div style="font-size: 13px; color: #666; line-height: 1.5;">
+          ${c.priorityReasoning.map(r => `• ${r}`).join('<br>')}
+        </div>
+      `;
+      const summaryDiv = document.getElementById('cv_summary').parentElement;
+      const existingDetails = summaryDiv.querySelector('.priority-details-insert');
+      if (existingDetails) existingDetails.remove();
+      priorityDetailsEl.className = 'priority-details-insert';
+      summaryDiv.appendChild(priorityDetailsEl);
+      
       document.getElementById('cv_lastOrder').textContent = c.lastOrder || 'No recent order.';
 
       // Sync left 'current case' display
@@ -313,11 +387,13 @@
     // Close on Escape
     document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeCaseQuickView(); });
 
-    // Initial render — render table and open quick view with the current (first) case
+    // Initial render — load from API
     document.addEventListener('DOMContentLoaded', () => {
-      renderCauseTable();
-      if (CASES.length) openCaseQuickView(CASES[0].id, false);
+      loadDailyCauseList();
     });
+
+    // Refresh cause list every 30 seconds
+    setInterval(loadDailyCauseList, 30000);
   </script>
 </body>
 </html>

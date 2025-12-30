@@ -70,12 +70,16 @@ app.get("/",(req,res)=> {
     res.render("landing.ejs");
 });
 
-app.get("/lawyerDashboard",(req,res) =>{
-    res.render("lawyer/lawyerDash.ejs");
+app.get("/lawyerDashboard", (req, res) =>{
+  if (!req.user) {
+    req.flash("error", "Please login to access the Lawyer Dashboard");
+    return res.redirect('/login');
+  }
+  res.render("lawyer/lawyerDash.ejs");
 });
 
 app.get("/judgeDashboard",(req,res) =>{
-    res.render("judge/judgeDashs.ejs");
+    res.render("judge/judgeDash.ejs");
 });
 
 app.get("/cMasterDashboard",(req,res) =>{

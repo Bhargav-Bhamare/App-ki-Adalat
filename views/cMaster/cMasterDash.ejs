@@ -19,6 +19,59 @@
                 <p>Court Master | District Court, New Delhi</p>
             </div>
         </div>
+        <script>
+            // Load daily cause list and populate Court Master table
+            async function loadCauseListForCM() {
+                try {
+                    const res = await fetch('/api/daily-cause-list?availableMinutes=300');
+                    if (!res.ok) throw new Error('Failed to fetch daily cause list');
+                    const json = await res.json();
+                    const list = json && json.data && json.data.dailyCauseList ? json.data.dailyCauseList : [];
+                    const tbody = document.getElementById('causeListBody');
+                    if (!tbody) return;
+                    tbody.innerHTML = '';
+                    list.forEach((item, idx) => {
+                        const tr = document.createElement('tr');
+                        tr.className = 'case-row';
+                        tr.setAttribute('data-case-id', item._id || `C${idx}`);
+                        const priorityLabel = (item && item.priority && typeof item.priority.score === 'number')
+                            ? (item.priority.score >= 0.85 ? 'High' : item.priority.score >= 0.6 ? 'Medium' : 'Low')
+                            : 'Unknown';
+                        const status = item.status || 'Pending';
+
+                        tr.innerHTML = `
+                            <td>${idx + 1}</td>
+                            <td><strong>${item.caseNumber || ''}</strong></td>
+                            <td>${(item.caseType || '')} - ${(item.petitioner || '')} v/s ${(item.respondent || '')}</td>
+                            <td>${item.stage || ''}</td>
+                            <td><span class="priority-badge priority-${priorityLabel.toLowerCase()}"></span>${priorityLabel}</td>
+                            <td><span class="status-badge status-pending">${status}</span></td>
+                            <td>
+                                <div class="action-buttons">
+                                    <button class="btn btn-call btn-sm" onclick="callCase('${item._id}')">Call</button>
+                                    <button class="btn btn-pass btn-sm" onclick="passCase('${item._id}')">Pass</button>
+                                    <button class="btn btn-adjourn btn-sm" onclick="adjournCase('${item._id}')">Adjourn</button>
+                                    <button class="btn btn-heard btn-sm" onclick="markHeard('${item._id}')">Heard</button>
+                                </div>
+                            </td>
+                        `;
+                        tbody.appendChild(tr);
+                    });
+                } catch (err) {
+                    console.error('Error loading cause list for Court Master:', err);
+                }
+            }
+
+            function callCase(id) { console.log('Call case', id); }
+            function passCase(id) { console.log('Pass case', id); }
+            function adjournCase(id) { console.log('Adjourn case', id); }
+            function markHeard(id) { console.log('Mark heard', id); }
+
+            document.addEventListener('DOMContentLoaded', () => {
+                loadCauseListForCM();
+                setInterval(loadCauseListForCM, 30000);
+            });
+        </script>
     </div>
 
     <div class="container">
@@ -119,87 +172,8 @@
                             <th>Actions</th>
                         </tr>
                     </thead>
-                    <tbody>
-                        <tr class="case-row" data-case-id="1">
-                            <td>1</td>
-                            <td><strong>CS/45/2024</strong></td>
-                            <td>Ram Lal vs. State</td>
-                            <td>Admission</td>
-                            <td><span class="priority-badge priority-high"></span>High</td>
-                            <td><span class="status-badge status-pending">Pending</span></td>
-                            <td>
-                                <div class="action-buttons">
-                                    <button class="btn btn-call btn-sm">Call</button>
-                                    <button class="btn btn-pass btn-sm">Pass</button>
-                                    <button class="btn btn-adjourn btn-sm">Adjourn</button>
-                                    <button class="btn btn-heard btn-sm">Heard</button>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr class="case-row" data-case-id="2">
-                            <td>2</td>
-                            <td><strong>CRM/112/2024</strong></td>
-                            <td>State vs. Mohan Kumar</td>
-                            <td>Evidence</td>
-                            <td><span class="priority-badge priority-medium"></span>Medium</td>
-                            <td><span class="status-badge status-pending">Pending</span></td>
-                            <td>
-                                <div class="action-buttons">
-                                    <button class="btn btn-call btn-sm">Call</button>
-                                    <button class="btn btn-pass btn-sm">Pass</button>
-                                    <button class="btn btn-adjourn btn-sm">Adjourn</button>
-                                    <button class="btn btn-heard btn-sm">Heard</button>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr class="case-row" data-case-id="3">
-                            <td>3</td>
-                            <td><strong>MA/78/2024</strong></td>
-                            <td>Divya Sharma vs. Rajesh Sharma</td>
-                            <td>Arguments</td>
-                            <td><span class="priority-badge priority-low"></span>Low</td>
-                            <td><span class="status-badge status-pending">Pending</span></td>
-                            <td>
-                                <div class="action-buttons">
-                                    <button class="btn btn-call btn-sm">Call</button>
-                                    <button class="btn btn-pass btn-sm">Pass</button>
-                                    <button class="btn btn-adjourn btn-sm">Adjourn</button>
-                                    <button class="btn btn-heard btn-sm">Heard</button>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr class="case-row" data-case-id="4">
-                            <td>4</td>
-                            <td><strong>WP/234/2024</strong></td>
-                            <td>Kumar Industries vs. Municipal Corporation</td>
-                            <td>Admission</td>
-                            <td><span class="priority-badge priority-high"></span>High</td>
-                            <td><span class="status-badge status-pending">Pending</span></td>
-                            <td>
-                                <div class="action-buttons">
-                                    <button class="btn btn-call btn-sm">Call</button>
-                                    <button class="btn btn-pass btn-sm">Pass</button>
-                                    <button class="btn btn-adjourn btn-sm">Adjourn</button>
-                                    <button class="btn btn-heard btn-sm">Heard</button>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr class="case-row" data-case-id="5">
-                            <td>5</td>
-                            <td><strong>EP/156/2024</strong></td>
-                            <td>Bank of India vs. Mehta Traders</td>
-                            <td>Evidence</td>
-                            <td><span class="priority-badge priority-medium"></span>Medium</td>
-                            <td><span class="status-badge status-pending">Pending</span></td>
-                            <td>
-                                <div class="action-buttons">
-                                    <button class="btn btn-call btn-sm">Call</button>
-                                    <button class="btn btn-pass btn-sm">Pass</button>
-                                    <button class="btn btn-adjourn btn-sm">Adjourn</button>
-                                    <button class="btn btn-heard btn-sm">Heard</button>
-                                </div>
-                            </td>
-                        </tr>
+                    <tbody id="causeListBody">
+                        <!-- Dynamic rows will be inserted here from /api/daily-cause-list -->
                     </tbody>
                 </table>
             </div>

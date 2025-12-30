@@ -36,6 +36,8 @@ router.get("/api/dashboard-data", wrapAsync(dashboardController.getLawyerDashboa
 router.get("/api/cases", wrapAsync(dashboardController.getLawyerCases));
 router.get("/api/notifications", wrapAsync(dashboardController.getNotifications));
 router.get("/api/defects", wrapAsync(dashboardController.getDefects));
+router.get("/api/daily-cause-list", wrapAsync(dashboardController.getDailyCauseList));
+router.get("/api/case-priority/:caseId", wrapAsync(dashboardController.getCasePriorityDetails));
 router.post("/api/file-case", wrapAsync(dashboardController.fileNewCase));
 router.post("/api/update-profile", wrapAsync(dashboardController.updateLawyerProfile));
 
